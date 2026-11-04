@@ -1,0 +1,253 @@
+/* ============================================================
+   СЕКЦИЯ: contact
+   ============================================================
+   Заголовок, прямые контакты (телеграм, почта), карточка
+   бизнес-ассистента и форма заявки. Вёрстка и пропорции колонок
+   по эталону concept-a-dark-premium.html (.contact-grid),
+   кнопки/фокус переиспользуют общие .button из base.css.
+   ============================================================ */
+
+.section-contact {
+  background-color: var(--color-surface-1);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.section-contact__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--space-70);
+}
+
+@media (max-width: 980px) {
+  .section-contact__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-50);
+  }
+}
+
+/* ------------------------------------------------------------
+   Левая колонка: заголовок, CTA, ассистент
+   ------------------------------------------------------------ */
+.section-contact__heading {
+  font-size: var(--font-size-contact-title);
+  line-height: var(--line-height-110);
+}
+
+.section-contact__subheading {
+  margin-top: var(--space-20);
+  max-width: 40ch;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+}
+
+.section-contact__people {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin-top: var(--space-44);
+  max-width: var(--measure-prose);
+}
+
+/* Вся карточка кликабельна: ссылка на телеграм растянута на карточку
+   псевдоэлементом, почта лежит поверх неё и кликается отдельно. */
+.section-contact__person {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-20);
+  padding: var(--space-20) var(--space-24);
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-surface-2);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.section-contact__person:hover {
+  border-color: var(--color-accent);
+}
+
+.section-contact__person-photo {
+  flex-shrink: 0;
+  width: var(--space-64);
+  height: var(--space-64);
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border-strong);
+}
+
+.section-contact__person-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.section-contact__person-label {
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-14);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.section-contact__person-name {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-19);
+  color: var(--color-text);
+}
+
+.section-contact__person-links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-16);
+  row-gap: var(--space-2);
+}
+
+.section-contact__person-link {
+  position: relative;
+  z-index: 1;
+  font-size: var(--font-size-13);
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.section-contact__person-link--main {
+  position: static;
+  color: var(--color-accent);
+}
+
+.section-contact__person-link--main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.section-contact__person-link:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ------------------------------------------------------------
+   Правая колонка: форма
+   ------------------------------------------------------------ */
+.section-contact__form {
+  background-color: var(--color-surface-2);
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--space-44);
+}
+
+@media (max-width: 600px) {
+  .section-contact__form {
+    padding: var(--space-28);
+  }
+}
+
+.section-contact__form-status {
+  margin: 0 0 var(--space-24);
+  padding: var(--space-12) var(--space-16);
+  border: var(--border-width) solid var(--color-border-strong);
+  font-size: var(--font-size-14-5);
+  line-height: var(--line-height-145);
+}
+
+.section-contact__form-status--success {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.section-contact__form-status--error {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-muted);
+}
+
+.section-contact__field {
+  margin: 0 0 var(--space-24);
+  border: 0;
+  padding: 0;
+}
+
+.section-contact__field label,
+.section-contact__field legend {
+  display: block;
+  margin-bottom: var(--space-10);
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-12);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+/* Звёздочка у обязательных полей (имя, телефон) — как на старом сайте. */
+.section-contact__required {
+  color: var(--color-accent);
+}
+
+.section-contact__field input[type='text'],
+.section-contact__field input[type='tel'],
+.section-contact__field input[type='email'],
+.section-contact__field textarea,
+.section-contact__field select {
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-bottom: var(--border-width) solid var(--color-border-strong);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-16);
+  padding: var(--space-10) var(--space-2);
+  border-radius: 0;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.section-contact__field input[type='text']:focus,
+.section-contact__field input[type='tel']:focus,
+.section-contact__field input[type='email']:focus,
+.section-contact__field textarea:focus,
+.section-contact__field select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.section-contact__field textarea {
+  resize: vertical;
+  min-height: var(--space-80);
+}
+
+/* ------------------------------------------------------------
+   Выбор мессенджера: выпадающий список, как на живом сайте
+   (petr-targonskiy.com), стиль поля общий с остальными инпутами.
+   ------------------------------------------------------------ */
+.section-contact__field select {
+  appearance: none;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--color-text-dim) 50%),
+    linear-gradient(135deg, var(--color-text-dim) 50%, transparent 50%);
+  background-position: calc(100% - var(--space-16)) center, calc(100% - var(--space-10)) center;
+  background-size: var(--space-6) var(--space-6), var(--space-6) var(--space-6);
+  background-repeat: no-repeat;
+}
+
+.section-contact__field select option {
+  background-color: var(--color-surface-2);
+  color: var(--color-text);
+}
+
+/* ------------------------------------------------------------
+   Поле-ловушка для ботов: скрыта визуально и от скринридеров
+   (aria-hidden на обёртке), но остаётся в DOM как обычное поле,
+   ловит только автозаполнение ботов, не помеха людям и клавиатуре.
+   ------------------------------------------------------------ */
+.section-contact__honeypot {
+  position: absolute;
+  width: var(--size-visually-hidden);
+  height: var(--size-visually-hidden);
+  margin: calc(var(--size-visually-hidden) * -1);
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.section-contact__submit {
+  width: 100%;
+  margin-top: var(--space-6);
+}

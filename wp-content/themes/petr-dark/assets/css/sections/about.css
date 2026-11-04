@@ -1,0 +1,129 @@
+/* ============================================================
+   СЕКЦИЯ: about
+   ============================================================
+   Своей секции нет в эталоне concept-a-dark-premium.html, верстаем
+   в той же системе (eyebrow, section-title, шкала отступов и цвета
+   текста из tokens.css).
+
+   Фикс известной ошибки старого сайта: неактивные шаги таймлайна были
+   почти невидимы. Здесь у таймлайна нет состояния «активный/неактивный»
+   вообще: все шесть шагов оформлены одинаково, на полном контрасте
+   (заголовок шага, основной цвет текста, а не приглушённый).
+   ============================================================ */
+
+.section-about {
+  padding-block: var(--space-100);
+  background-color: var(--color-bg);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.section-about__head {
+  max-width: var(--measure-lead);
+  margin-bottom: var(--space-64);
+}
+
+.section-about__eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-22);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+  display: block;
+}
+
+.section-about__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+  margin-top: var(--space-18);
+}
+
+.section-about__bio {
+  margin-top: var(--space-24);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+   Таймлайн
+   ------------------------------------------------------------ */
+.section-about__timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-46);
+  max-width: var(--measure-timeline);
+  padding-left: var(--space-32);
+  border-left: var(--border-width) solid var(--color-border-strong);
+}
+
+.section-about__step {
+  position: relative;
+}
+
+/* Маркер шага на линии таймлайна, сплошной, полного акцентного
+   цвета: одинаковый на всех шагах, никакого затемнения. */
+.section-about__step::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--space-32) * -1 - var(--space-6));
+  top: var(--space-4);
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-accent);
+  border: var(--border-width) solid var(--color-bg);
+}
+
+.section-about__step-period {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-8);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+  display: block;
+}
+
+.section-about__step-title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-22);
+  line-height: var(--line-height-125);
+  color: var(--color-text);
+  margin-top: var(--space-10);
+}
+
+.section-about__step-desc {
+  margin-top: var(--space-10);
+  font-size: var(--font-size-15);
+  line-height: var(--line-height-155);
+  /* Приглушённый цвет текста, тот же уровень, что и везде на сайте
+     (bio, подписи проектов), а не дополнительное затемнение поверх. */
+  color: var(--color-text-muted);
+  max-width: var(--measure-prose);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .section-about {
+    padding-block: var(--space-64);
+  }
+
+  .section-about__head {
+    margin-bottom: var(--space-40);
+  }
+
+  .section-about__timeline {
+    gap: var(--space-32);
+    padding-left: var(--space-24);
+  }
+
+  .section-about__step::before {
+    left: calc(var(--space-24) * -1 - var(--space-6));
+  }
+}

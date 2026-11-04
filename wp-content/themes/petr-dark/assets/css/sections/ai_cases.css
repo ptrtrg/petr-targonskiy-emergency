@@ -1,0 +1,588 @@
+/* ============================================================
+   СЕКЦИЯ: ai_cases — каталог кейсов ИИ-агентов
+   ============================================================
+   28.09.2026: четыре карточки превратились в каталог из трёх с
+   лишним десятков. Сверху фильтр («Самое интересное», «Все»,
+   направления), ниже сетка карточек с картинкой, клик открывает
+   окно с подробностями. Стили фильтра, окна и скрытия подробностей
+   работают только при .is-enhanced (его ставит ai-cases.js): без
+   скрипта все карточки видны целиком.
+   ============================================================ */
+.section-ai-cases {
+  padding-block: var(--space-100);
+  background-color: var(--color-bg);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.section-ai-cases__head {
+  max-width: var(--size-section-head-max-width);
+  margin-bottom: var(--space-40);
+}
+
+.section-ai-cases__heading {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+  color: var(--color-text);
+}
+
+.section-ai-cases__subheading {
+  margin-top: var(--space-16);
+  font-size: var(--font-size-15-5);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-155);
+}
+
+.section-ai-cases__hint {
+  margin-top: var(--space-16);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+}
+
+/* ------------------------------------------------------------
+   Фильтр
+   ------------------------------------------------------------ */
+.ai-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.ai-filter[hidden] {
+  display: none;
+}
+
+.ai-filter__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-10) var(--space-16);
+  border: var(--border-width) solid var(--color-border-strong);
+  background: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-14-5);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
+}
+
+.ai-filter__chip:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.ai-filter__chip[aria-pressed="true"] {
+  color: var(--color-on-accent);
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.ai-filter__chip--top span:first-child::before {
+  content: "★";
+  margin-right: var(--space-6);
+}
+
+.ai-filter__count {
+  font-size: var(--font-size-12);
+  opacity: 0.7;
+}
+
+.ai-filter__sep {
+  width: var(--border-width);
+  height: var(--space-24);
+  background-color: var(--color-border-strong);
+}
+
+/* ------------------------------------------------------------
+   Сетка карточек
+   ------------------------------------------------------------ */
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--size-ai-card-min-width), 100%), 1fr));
+  gap: var(--space-20);
+  margin-top: var(--space-28);
+}
+
+.ai-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-surface-1);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.ai-card[hidden] {
+  display: none;
+}
+
+.ai-card__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: var(--border-width) solid var(--color-border);
+  background-color: var(--color-surface-2);
+}
+
+.ai-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+/* Карточка топ-10 с роликом из презентации (29.10.2026): поверх
+   кадра-заставки скрипт кладёт <video> с первыми секундами анимации.
+   Играет при наведении, на телефоне у карточки в центре экрана. */
+.ai-card__media--video {
+  position: relative;
+}
+
+.ai-card__media--video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-standard),
+    transform var(--duration-slow) var(--ease-standard);
+}
+
+.ai-card__media--video.is-playing video {
+  opacity: 1;
+}
+
+.ai-card__play {
+  position: absolute;
+  right: var(--space-12);
+  bottom: var(--space-12);
+  width: var(--size-ai-play);
+  height: var(--size-ai-play);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-scrim-control);
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.ai-card__play::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-style: solid;
+  border-width: var(--size-ai-play-arrow) 0 var(--size-ai-play-arrow) calc(var(--size-ai-play-arrow) * 1.6);
+  border-color: transparent transparent transparent var(--color-on-scrim);
+  transform: translate(-35%, -50%);
+}
+
+.ai-card__media--video.is-playing .ai-card__play {
+  opacity: 0;
+}
+
+.ai-card__rank {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-16);
+  color: var(--color-accent);
+}
+
+.ai-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  flex: 1;
+  padding: var(--space-20) var(--space-24) var(--space-24);
+}
+
+.ai-card__category {
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-14);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.ai-card__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-125);
+  color: var(--color-text);
+}
+
+.ai-card__metric {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-135);
+  color: var(--color-accent);
+}
+
+.ai-card__company {
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+}
+
+.ai-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin-top: var(--space-6);
+}
+
+.ai-card__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-size: var(--font-size-14-5);
+  line-height: var(--line-height-155);
+  color: var(--color-text-muted);
+}
+
+.ai-card__label {
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-14);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.ai-card__row--result .ai-card__label {
+  color: var(--color-accent);
+}
+
+.ai-card__row--result p {
+  color: var(--color-text);
+}
+
+.ai-card__more,
+.ai-card__open {
+  display: none;
+}
+
+/* Со скриптом: подробности уходят в окно, вся карточка кликабельна. */
+.is-enhanced .ai-card__details {
+  display: none;
+}
+
+.is-enhanced .ai-card__open {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.is-enhanced .ai-card__more {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: var(--space-10);
+  font-size: var(--font-size-13);
+  color: var(--color-accent);
+}
+
+.is-enhanced .ai-card__more::after {
+  content: " →";
+}
+
+.is-enhanced .ai-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(calc(var(--space-4) * -1));
+}
+
+.is-enhanced .ai-card:hover .ai-card__media video,
+.is-enhanced .ai-card:hover .ai-card__media img {
+  transform: scale(1.03);
+}
+
+.is-enhanced .ai-card__open:focus-visible {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: calc(var(--space-2) * -1);
+}
+
+.ai-card.is-entering {
+  animation: ai-card-enter var(--duration-base) var(--ease-standard) both;
+  animation-delay: var(--ai-enter-delay, 0ms);
+}
+
+@keyframes ai-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-card-enter-offset));
+  }
+}
+
+/* ------------------------------------------------------------
+   Окно кейса
+   ------------------------------------------------------------ */
+.ai-dialog {
+  width: calc(100% - var(--space-32));
+  max-width: var(--size-ai-dialog-max-width);
+  max-height: var(--size-dialog-max-height);
+  padding: 0;
+  border: var(--border-width) solid var(--color-border-strong);
+  background-color: var(--color-surface-1);
+  color: var(--color-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.ai-dialog::backdrop {
+  background-color: var(--color-scrim);
+}
+
+.ai-dialog__inner {
+  position: relative;
+}
+
+.ai-dialog__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+/* Под роликом фон самой презентации, в обеих темах: поля вокруг кадра не светятся. */
+.ai-dialog__media.ai-dialog__media--video {
+  background-color: var(--color-ai-video-bg);
+}
+
+/* Полоса воспроизведения по верхнему краю ролика, как в веб-версии
+   презентации для Барнаула: тонкая линия цвета слайдов. Клик перематывает,
+   зона клика шире самой линии. */
+.ai-dialog__player {
+  width: 100%;
+  position: relative;
+}
+
+.ai-dialog__bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: var(--size-ai-video-bar);
+  background-color: var(--color-ai-video-track);
+  cursor: pointer;
+  transform-origin: 50% 0;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.ai-dialog__bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 calc(var(--space-12) * -1);
+}
+
+.ai-dialog__bar:hover {
+  transform: scaleY(2);
+}
+
+.ai-dialog__bar i {
+  display: block;
+  height: 100%;
+  background-color: var(--color-ai-video-progress);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+.ai-dialog__media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-ai-video-bg);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.ai-dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-28) var(--space-40) var(--space-16);
+}
+
+.ai-dialog__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-28);
+  line-height: var(--line-height-125);
+}
+
+.ai-dialog__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin-top: var(--space-6);
+}
+
+.ai-dialog__close {
+  position: absolute;
+  top: var(--space-14);
+  right: var(--space-14);
+  z-index: 1;
+  width: var(--size-dialog-close);
+  height: var(--size-dialog-close);
+  border: var(--border-width) solid var(--color-border-strong);
+  background-color: var(--color-surface-1);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.ai-dialog__close:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.ai-dialog__close span::before,
+.ai-dialog__close span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-16);
+  height: var(--border-width);
+  background-color: currentColor;
+}
+
+.ai-dialog__close span::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ai-dialog__close span::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.ai-dialog__nav {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-14) var(--space-40);
+  border-top: var(--border-width) solid var(--color-border);
+  background-color: var(--color-surface-1);
+}
+
+.ai-dialog__arrow {
+  width: var(--size-dialog-close);
+  height: var(--size-dialog-close);
+  border: var(--border-width) solid var(--color-border-strong);
+  background: none;
+  color: var(--color-text);
+  font-size: var(--font-size-17);
+  cursor: pointer;
+}
+
+.ai-dialog__arrow:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.ai-dialog__counter {
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Широкий экран: картинка слева, текст справа, у текста своя прокрутка,
+   чтобы «Было / Стало / Итог» не уезжали под панель со стрелками. */
+@media (min-width: 981px) {
+  .ai-dialog {
+    overflow: hidden;
+  }
+
+  .ai-dialog__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    max-height: var(--size-dialog-max-height);
+  }
+
+  .ai-dialog__media {
+    grid-row: 1 / 3;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface-2);
+    border-right: var(--border-width) solid var(--color-border);
+  }
+
+  .ai-dialog__media video {
+    border-bottom: 0;
+  }
+
+  .ai-dialog__media img {
+    border-bottom: 0;
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
+
+  .ai-dialog__body {
+    overflow-y: auto;
+    padding-top: var(--space-64);
+  }
+
+  .ai-dialog__nav {
+    position: static;
+    padding-inline: var(--space-40);
+  }
+}
+
+.section-ai-cases__cta-wrap {
+  margin-top: var(--space-64);
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .section-ai-cases {
+    padding-block: var(--space-64);
+  }
+
+  /* Фильтр на телефоне — одна прокручиваемая строка, а не стена чипов. */
+  .ai-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--container-padding-mobile) * -1);
+    padding-inline: var(--container-padding-mobile);
+    scrollbar-width: none;
+  }
+
+  .ai-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-filter__chip {
+    flex-shrink: 0;
+  }
+
+  .ai-dialog__body {
+    padding: var(--space-20) var(--space-18) var(--space-12);
+  }
+
+  .ai-dialog__nav {
+    padding: var(--space-10) var(--space-18);
+  }
+
+  .ai-dialog__title {
+    font-size: var(--font-size-22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-card,
+  .ai-card__media img {
+    transition: none;
+  }
+
+  .is-enhanced .ai-card:hover {
+    transform: none;
+  }
+}

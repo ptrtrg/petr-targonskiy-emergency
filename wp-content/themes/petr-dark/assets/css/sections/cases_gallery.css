@@ -1,0 +1,538 @@
+/* ============================================================
+   СЕКЦИЯ: cases_gallery
+   ============================================================
+   Четыре кейса систематизации. Карточка целиком читаема без JS:
+   фото, компания, отрасль, масштаб и раскрытый <details> с блоками
+   «проблема / решение / результат» плюс ссылка в Telegram — уже
+   видны. Скрипт assets/js/cases-modal.js на старте схлопывает
+   <details> и превращает клик по нему в открытие модалки с полной
+   галереей — модалка это улучшение поверх видимого, не замена.
+   ============================================================ */
+
+.section-cases-gallery {
+  padding-block: var(--space-100);
+  background-color: var(--color-surface-1);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.section-cases-gallery__head {
+  max-width: var(--size-section-head-max-width);
+  margin-bottom: var(--space-64);
+}
+
+.section-cases-gallery__heading {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+  color: var(--color-text);
+}
+
+.section-cases-gallery__subheading {
+  margin-top: var(--space-16);
+  font-size: var(--font-size-15-5);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-155);
+}
+
+/* ------------------------------------------------------------
+   Сетка карточек — та же решётка "1px-границы через фон",
+   что и в section-ai-cases__grid.
+   ------------------------------------------------------------ */
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--border-width);
+  background-color: var(--color-border);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.case-card {
+  background-color: var(--color-surface-1);
+  display: flex;
+  flex-direction: column;
+}
+
+.case-card__media {
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-bg);
+  overflow: hidden;
+}
+
+.case-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-card__body {
+  padding: var(--space-28) var(--space-32);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.case-card__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-16);
+  flex-wrap: wrap;
+}
+
+.case-card__company {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-22);
+  color: var(--color-text);
+  line-height: var(--line-height-125);
+}
+
+.case-card__industry {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12-5);
+  letter-spacing: var(--tracking-2);
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.case-card__scale {
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-16);
+}
+
+/* ------------------------------------------------------------
+   Раскрывающийся блок «проблема / решение / результат».
+   Открыт по умолчанию (атрибут open в разметке) — весь текст
+   читаем без единой строчки JS. Стрелка-маркер списка убрана
+   и нарисована заново псевдоэлементом, чтобы её можно было
+   развернуть в сторону через CSS-переменную поворота.
+   ------------------------------------------------------------ */
+.case-card__details {
+  border-top: var(--border-width) solid var(--color-border);
+  padding-top: var(--space-16);
+}
+
+.case-card__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-13);
+  letter-spacing: var(--tracking-2);
+  color: var(--color-text-muted);
+  list-style: none;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.case-card__summary::-webkit-details-marker {
+  display: none;
+}
+
+.case-card__summary::before {
+  content: '';
+  flex-shrink: 0;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-right: var(--border-width) solid currentColor;
+  border-bottom: var(--border-width) solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.case-card__details[open] > .case-card__summary::before {
+  transform: rotate(-135deg);
+}
+
+.case-card:hover .case-card__summary,
+.case-card__summary:hover,
+.case-card__summary:focus-visible {
+  color: var(--color-accent);
+}
+
+.case-card__summary:focus-visible {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: var(--space-4);
+}
+
+.case-card__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  font-size: var(--font-size-11);
+  color: var(--color-text-dim);
+}
+
+.case-card__detail-body {
+  margin-top: var(--space-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.case-card__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.case-card__block-label {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-16);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.case-card__block p {
+  font-size: var(--font-size-14-5);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-155);
+}
+
+.case-card__block--result .case-card__block-label {
+  color: var(--color-accent-dim);
+}
+
+.case-card__block--result ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.case-card__block--result li {
+  position: relative;
+  padding-left: var(--space-16);
+  font-size: var(--font-size-14-5);
+  color: var(--color-text);
+  line-height: var(--line-height-145);
+}
+
+.case-card__block--result li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: 50%;
+  background-color: var(--color-accent);
+}
+
+.case-card__tg-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  margin-top: var(--space-6);
+  padding-top: var(--space-14);
+  border-top: var(--border-width) solid var(--color-border);
+  font-size: var(--font-size-13);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.case-card__tg-link:hover,
+.case-card__tg-link:focus-visible {
+  color: var(--color-accent);
+}
+
+@media (max-width: 600px) {
+  .section-cases-gallery {
+    padding-block: var(--space-64);
+  }
+
+  .cases-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .case-card__body {
+    padding: var(--space-24) var(--container-padding-mobile);
+  }
+}
+
+/* ============================================================
+   МОДАЛКА ГАЛЕРЕИ КЕЙСА
+   ============================================================
+   Существует и работает только при доступном JS (assets/js/cases-modal.js
+   заполняет и открывает её). Без JS остаётся [hidden] и не мешает —
+   вся суть кейса уже читаема в открытом <details> карточки выше.
+   ============================================================ */
+.case-modal[hidden] {
+  display: none;
+}
+
+.case-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-24) var(--container-padding-mobile);
+  overflow-y: auto;
+}
+
+.case-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-scrim);
+  backdrop-filter: blur(var(--blur-header));
+}
+
+.case-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--size-modal-max-width);
+  margin-block: var(--space-24);
+  background-color: var(--color-surface-2);
+  border: var(--border-width) solid var(--color-border-strong);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-40);
+}
+
+.case-modal__close {
+  position: absolute;
+  top: var(--space-20);
+  right: var(--space-20);
+  width: var(--space-40);
+  height: var(--space-40);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: var(--border-width) solid var(--color-border-strong);
+  background-color: var(--color-surface-1);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.case-modal__close:hover,
+.case-modal__close:focus-visible {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.case-modal__head {
+  padding-right: var(--space-52);
+  margin-bottom: var(--space-24);
+}
+
+.case-modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+  margin-bottom: var(--space-12);
+}
+
+.case-modal__tag {
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-2);
+  color: var(--color-accent);
+  border: var(--border-width) solid var(--color-border-strong);
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-sm);
+}
+
+.case-modal__tag:empty {
+  display: none;
+}
+
+.case-modal__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-28);
+  color: var(--color-text);
+}
+
+/* ------------------------------------------------------------
+   Галерея: главное фото, стрелки, счётчик, миниатюры.
+   ------------------------------------------------------------ */
+.case-modal__gallery {
+  margin-bottom: var(--space-28);
+}
+
+.case-modal__main-image {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.case-modal__main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.case-modal__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--space-40);
+  height: var(--space-40);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-scrim-control);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.case-modal__arrow:hover,
+.case-modal__arrow:focus-visible {
+  background-color: var(--color-scrim-control-hover);
+}
+
+.case-modal__arrow--prev {
+  left: var(--space-12);
+}
+
+.case-modal__arrow--next {
+  right: var(--space-12);
+}
+
+.case-modal__counter {
+  position: absolute;
+  right: var(--space-16);
+  bottom: var(--space-12);
+  font-size: var(--font-size-12);
+  color: var(--color-text-muted);
+  background-color: var(--color-scrim-control);
+  padding: var(--space-2) var(--space-10);
+  border-radius: var(--radius-sm);
+}
+
+.case-modal__thumbs {
+  display: flex;
+  gap: var(--space-10);
+  margin-top: var(--space-10);
+}
+
+.case-modal__thumb {
+  flex: 1;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border-strong);
+  background-color: var(--color-bg);
+  cursor: pointer;
+  opacity: 0.5;
+  overflow: hidden;
+  transition: opacity var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.case-modal__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-modal__thumb:hover,
+.case-modal__thumb:focus-visible {
+  opacity: 0.8;
+}
+
+.case-modal__thumb[aria-current='true'] {
+  opacity: 1;
+  border-color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------
+   Блоки «проблема / решение / результат» — те же токены,
+   что и в карточке (case-card__block-label), просто в модалке.
+   ------------------------------------------------------------ */
+.case-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-18);
+  margin-bottom: var(--space-24);
+}
+
+.case-modal__block-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-16);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-6);
+}
+
+.case-modal__block--result .case-modal__block-label {
+  color: var(--color-accent-dim);
+}
+
+.case-modal__block p {
+  font-size: var(--font-size-15);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-155);
+}
+
+.case-modal__block--result ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.case-modal__block--result li {
+  position: relative;
+  padding-left: var(--space-16);
+  font-size: var(--font-size-15);
+  color: var(--color-text);
+  line-height: var(--line-height-145);
+}
+
+.case-modal__block--result li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: 50%;
+  background-color: var(--color-accent);
+}
+
+.case-modal__tg-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding-top: var(--space-20);
+  border-top: var(--border-width) solid var(--color-border);
+  font-size: var(--font-size-13);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.case-modal__tg-link:hover,
+.case-modal__tg-link:focus-visible {
+  color: var(--color-accent);
+}
+
+@media (max-width: 600px) {
+  .case-modal {
+    padding: var(--space-16) var(--container-padding-mobile);
+  }
+
+  .case-modal__dialog {
+    padding: var(--space-24) var(--container-padding-mobile);
+  }
+
+  .case-modal__thumbs {
+    flex-wrap: wrap;
+  }
+
+  .case-modal__thumb {
+    flex-basis: calc(50% - var(--space-10) / 2);
+  }
+}

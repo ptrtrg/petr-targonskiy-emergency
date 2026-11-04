@@ -1,0 +1,126 @@
+/* ============================================================
+   СЕКЦИЯ: testimonials
+   ============================================================
+   Четыре отзыва, сетка два на два. Второй слой поверхностей
+   на чётных карточках даёт лёгкую шахматку без лишнего цвета.
+   ============================================================ */
+.section-testimonials {
+  padding-block: var(--space-100);
+  background-color: var(--color-surface-1);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.section-testimonials__head {
+  max-width: var(--size-section-head-max-width);
+  margin-bottom: var(--space-64);
+}
+
+.section-testimonials__heading {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+  color: var(--color-text);
+}
+
+.section-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--border-width);
+  background-color: var(--color-border);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.testimonial-card {
+  margin: 0;
+  background-color: var(--color-surface-2);
+  padding: var(--space-40) var(--space-34);
+  display: flex;
+  flex-direction: column;
+}
+
+.section-testimonials__grid .testimonial-card:nth-child(even) {
+  background-color: var(--color-surface-3);
+}
+
+.testimonial-card__mark {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-56);
+  color: var(--color-accent);
+  line-height: var(--line-height-100);
+  margin-bottom: var(--space-12);
+}
+
+.testimonial-card__quote {
+  margin: 0;
+  flex: 1;
+}
+
+.testimonial-card__quote p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-19);
+  line-height: var(--line-height-145);
+  color: var(--color-text);
+}
+
+.testimonial-card__footer {
+  margin-top: var(--space-26);
+  display: flex;
+  align-items: center;
+  gap: var(--space-14);
+}
+
+.testimonial-card__photo {
+  width: var(--size-avatar-sm);
+  height: var(--size-avatar-sm);
+  border-radius: 50%;
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border-strong);
+  flex-shrink: 0;
+}
+
+.testimonial-card__identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.testimonial-card__name {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-13);
+  color: var(--color-text);
+}
+
+.testimonial-card__meta {
+  font-size: var(--font-size-12-5);
+  color: var(--color-text-dim);
+}
+
+.testimonial-card__video {
+  font-size: var(--font-size-12-5);
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-1);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.testimonial-card__video:hover {
+  color: var(--color-accent-hover);
+}
+
+@media (max-width: 600px) {
+  .section-testimonials {
+    padding-block: var(--space-64);
+  }
+
+  .section-testimonials__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .testimonial-card {
+    padding: var(--space-34) var(--space-24);
+  }
+}

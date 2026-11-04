@@ -1,0 +1,474 @@
+/* ============================================================
+   СЕКЦИЯ: hero (первый экран)
+   ============================================================
+   Вёрстка и типографика — эталон concept-a-dark-premium.html
+   (.hero / .hero-grid / .hero-name / .hero-role / .hero-stats).
+   Портрет — приём «растворение краёв, деликатное» из
+   photo-treatments.html, вариант 1, адаптированный под фактическую
+   геометрию исходника (600×900, жёсткий срез плеч на высоте 675px
+   из 900 — то есть 75% высоты кадра).
+   ============================================================ */
+
+.section-hero {
+  position: relative;
+  padding-block: var(--space-120) var(--space-100);
+  background:
+    var(--hero-glow),
+    var(--color-bg);
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .section-hero {
+    padding-block: var(--space-64);
+  }
+}
+
+.section-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--space-32);
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .section-hero__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------------------
+   Текстовая колонка
+   ------------------------------------------------------------ */
+.section-hero__name {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-hero-name);
+  line-height: var(--line-height-102);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.section-hero__role {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-16);
+  color: var(--color-text-muted);
+  margin-top: var(--space-16);
+  max-width: var(--measure-hero-role);
+  line-height: var(--line-height-155);
+}
+
+.section-hero__tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-hero-quote);
+  line-height: var(--line-height-135);
+  color: var(--color-text);
+  margin-top: var(--space-40);
+  max-width: var(--measure-prose);
+}
+
+/* ------------------------------------------------------------
+   Чипы тегов (tagline_tags) — своего эталонного блока нет
+   в concept-a-dark-premium.html, оформлены в системе book-review-chip:
+   тонкая рамка, мелкий подписной шрифт, без заливки.
+   ------------------------------------------------------------ */
+.section-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+  margin-top: var(--space-24);
+}
+
+.section-hero__tag {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12-5);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-1);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-6) var(--space-14);
+}
+
+.section-hero__stats {
+  display: flex;
+  gap: var(--space-44);
+  margin-top: var(--space-52);
+  flex-wrap: wrap;
+}
+
+.section-hero__stat-value {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-34);
+  color: var(--color-text);
+}
+
+.section-hero__stat-label {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12-5);
+  color: var(--color-text-dim);
+  letter-spacing: var(--tracking-4);
+  margin-top: var(--space-4);
+}
+
+.section-hero__actions {
+  display: flex;
+  gap: var(--space-12);
+  margin-top: var(--space-52);
+  flex-wrap: wrap;
+}
+
+/* ------------------------------------------------------------
+   Портрет: как на старом сайте (petr-targonskiy Next.js), вернули
+   18.08.2026 по прямой просьбе Петра — вариант «растворение краёв»
+   маской обрезал кадр на 75% высоты вместе с плечами и читался как
+   надгробная плита.
+   ------------------------------------------------------------
+   .section-hero__portrait-wrap  — позиционирующий контейнер, без
+                                    рамки и без фона.
+   .section-hero__portrait-glow  — цветное блюр-пятно позади фото
+                                    (не силуэт фото, обычный цветной
+                                    блик, как на старом сайте).
+   .section-hero__portrait       — сама фотография целиком, без
+                                    обрезающей маски, только мягкая
+                                    цветная тень (drop-shadow), как
+                                    на старом сайте.
+   ------------------------------------------------------------ */
+.section-hero__portrait-wrap {
+  position: relative;
+  justify-self: start;
+  align-self: end;
+  width: 100%;
+  max-width: var(--measure-hero-portrait);
+  aspect-ratio: 1000 / 1402;
+  /* Портрет стоит на нижнем крае секции: съедаем нижний отступ секции. */
+  margin-bottom: calc(var(--space-100) * -1);
+}
+
+@media (max-width: 980px) {
+  .section-hero__portrait-wrap {
+    justify-self: center;
+    align-self: auto;
+    max-width: var(--measure-hero-portrait-mobile);
+    margin-bottom: 0;
+    order: -1;
+  }
+}
+
+.section-hero__portrait-glow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--size-portrait-glow-width);
+  height: var(--size-portrait-glow-height);
+  border-radius: var(--radius-circle);
+  background-image: var(--portrait-glow-gradient);
+  filter: blur(var(--blur-portrait-glow));
+  opacity: var(--opacity-portrait-glow);
+  pointer-events: none;
+}
+
+.section-hero__portrait {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  -webkit-mask-image: var(--portrait-mask), var(--portrait-mask-sides);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--portrait-mask), var(--portrait-mask-sides);
+  mask-composite: intersect;
+  filter: grayscale(var(--filter-portrait-grayscale)) contrast(var(--filter-portrait-contrast));
+}
+
+/* Три кнопки в первом экране: у общих кнопок поля по бокам шире,
+   с ними третья переносилась на вторую строку. */
+.section-hero__actions .button {
+  padding-inline: var(--space-20);
+}
+
+@media (max-width: 600px) {
+  .section-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, auto));
+    gap: var(--space-20);
+  }
+
+  .section-hero__stat-value {
+    font-size: var(--font-size-28);
+  }
+}
+
+/* ------------------------------------------------------------
+   Окно «Пригласить спикером» (28.09.2026), sections/speaker-dialog.php.
+   Нативный <dialog>: затемнение через ::backdrop.
+   ------------------------------------------------------------ */
+.speaker-dialog {
+  width: calc(100% - var(--space-32));
+  max-width: var(--size-speaker-dialog-max-width);
+  max-height: var(--size-dialog-max-height);
+  padding: 0;
+  border: var(--border-width) solid var(--color-border-strong);
+  background-color: var(--color-surface-1);
+  color: var(--color-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.speaker-dialog::backdrop {
+  background-color: var(--color-scrim);
+}
+
+.speaker-dialog__inner {
+  position: relative;
+  padding: var(--space-44) var(--space-40) var(--space-40);
+}
+
+.speaker-dialog__close {
+  position: absolute;
+  top: var(--space-14);
+  right: var(--space-14);
+  width: var(--size-dialog-close);
+  height: var(--size-dialog-close);
+  border: var(--border-width) solid var(--color-border-strong);
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.speaker-dialog__close:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.speaker-dialog__close span::before,
+.speaker-dialog__close span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-16);
+  height: var(--border-width);
+  background-color: currentColor;
+}
+
+.speaker-dialog__close span::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.speaker-dialog__close span::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.speaker-dialog__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-34);
+  line-height: var(--line-height-110);
+  padding-right: var(--space-44);
+}
+
+.speaker-dialog__lead {
+  margin-top: var(--space-14);
+  max-width: var(--measure-prose);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+  color: var(--color-text-muted);
+}
+
+.speaker-dialog__slides {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-16);
+  margin-top: var(--space-28);
+}
+
+.speaker-dialog__slide a {
+  display: block;
+  border: var(--border-width) solid var(--color-border);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.speaker-dialog__slide a:hover {
+  border-color: var(--color-accent);
+}
+
+.speaker-dialog__slide img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.speaker-dialog__caption {
+  display: block;
+  margin-top: var(--space-6);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+}
+
+.speaker-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  margin-top: var(--space-28);
+}
+
+.speaker-dialog__form {
+  margin-top: var(--space-40);
+  padding-top: var(--space-32);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.speaker-dialog__form-title {
+  margin-bottom: var(--space-16);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-22);
+}
+
+@media (max-width: 600px) {
+  .speaker-dialog__inner {
+    padding: var(--space-32) var(--space-18) var(--space-24);
+  }
+
+  .speaker-dialog__title {
+    font-size: var(--font-size-26);
+  }
+
+  .speaker-dialog__slides {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .speaker-dialog__actions .button {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+.speaker-dialog__note {
+  margin-top: var(--space-16);
+  font-size: var(--font-size-14-5);
+  line-height: var(--line-height-155);
+  color: var(--color-text-muted);
+}
+
+.speaker-dialog__slide a {
+  cursor: zoom-in;
+}
+
+/* Просмотр слайда поверх окна спикера */
+.speaker-viewer {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: var(--space-20);
+  border: 0;
+  background-color: var(--color-scrim-strong);
+  color: var(--color-text);
+}
+
+.speaker-viewer[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speaker-viewer::backdrop {
+  background-color: var(--color-scrim);
+}
+
+.speaker-viewer__figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-14);
+  max-width: min(100%, var(--size-dataru-lightbox-max-width) * 1.4);
+}
+
+.speaker-viewer__figure img {
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - var(--space-120));
+  object-fit: contain;
+  box-shadow: var(--shadow-card);
+}
+
+.speaker-viewer__figure figcaption {
+  font-size: var(--font-size-14-5);
+  color: var(--color-on-scrim);
+}
+
+.speaker-viewer__close,
+.speaker-viewer__arrow {
+  position: absolute;
+  z-index: 1;
+  width: var(--space-52);
+  height: var(--space-52);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-surface-1);
+  color: var(--color-text);
+  font-size: var(--font-size-19);
+  cursor: pointer;
+}
+
+.speaker-viewer__close {
+  top: var(--space-20);
+  right: var(--space-20);
+}
+
+.speaker-viewer__close span::before,
+.speaker-viewer__close span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-16);
+  height: var(--border-width);
+  background-color: currentColor;
+}
+
+.speaker-viewer__close span::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.speaker-viewer__close span::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.speaker-viewer__arrow {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.speaker-viewer__arrow--prev {
+  left: var(--space-20);
+}
+
+.speaker-viewer__arrow--next {
+  right: var(--space-20);
+}
+
+.speaker-viewer__close:hover,
+.speaker-viewer__arrow:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+@media (max-width: 600px) {
+  .speaker-viewer__arrow {
+    top: auto;
+    bottom: var(--space-20);
+    transform: none;
+  }
+}

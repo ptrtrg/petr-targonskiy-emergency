@@ -1,0 +1,928 @@
+/* ============================================================
+   БЛОГ: список статей (archive.php) и статья (single.php)
+   ============================================================
+   Подключается на archive.php и single.php (см. inc/enqueue.php,
+   условие is_archive() || is_home() || is_singular('post')).
+   Ширина статьи — колонка .article в --measure-article (768px + поля
+   контейнера) по центру, как на старом сайте (max-w-3xl mx-auto).
+   Раньше блоки внутри резались на --measure-prose (560px) и прижимались
+   к левому краю: на широком экране половина страницы пустовала.
+   Исправлено 17.09.2026 по замечанию Петра. В списке статей (archive)
+   --measure-prose для анонсов оставлена.
+   ============================================================ */
+
+
+/* ============================================================
+   СПИСОК СТАТЕЙ (archive.php)
+   ============================================================ */
+.blog-archive__header {
+  max-width: var(--size-section-head-max-width);
+}
+
+.blog-archive__title {
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+}
+
+.blog-archive__subtitle {
+  margin-top: var(--space-16);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+}
+
+.blog-archive__list {
+  margin-top: var(--space-60);
+  display: flex;
+  flex-direction: column;
+  gap: var(--border-width);
+  background-color: var(--color-border);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.blog-archive__card {
+  display: block;
+  background-color: var(--color-surface-1);
+  padding: var(--space-32) var(--space-34);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.blog-archive__card:hover {
+  background-color: var(--color-surface-2);
+}
+
+.blog-archive__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+}
+
+.blog-archive__meta-sep {
+  width: var(--space-4);
+  height: var(--space-4);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-text-dim);
+}
+
+.blog-archive__card-title {
+  margin-top: var(--space-12);
+  font-size: var(--font-size-28);
+  line-height: var(--line-height-125);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.blog-archive__card:hover .blog-archive__card-title {
+  color: var(--color-accent);
+}
+
+.blog-archive__card-excerpt {
+  margin-top: var(--space-12);
+  max-width: var(--measure-prose);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+}
+
+.blog-archive__card-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-top: var(--space-16);
+}
+
+.blog-archive__keyword {
+  font-size: var(--font-size-12);
+  color: var(--color-accent);
+  background-color: var(--color-accent-soft);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) var(--space-10);
+}
+
+.blog-archive__empty {
+  margin-top: var(--space-40);
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 600px) {
+  .blog-archive__card {
+    padding: var(--space-24);
+  }
+
+  .blog-archive__card-title {
+    font-size: var(--font-size-22);
+  }
+}
+
+
+/* ============================================================
+   СТАТЬЯ (single.php)
+   ============================================================ */
+.article__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+}
+
+.article__breadcrumb a {
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.article__breadcrumb a:hover {
+  color: var(--color-accent);
+}
+
+.article__breadcrumb [aria-current='page'] {
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+   Колонка статьи / страницы: уже общего .container и по центру
+   ------------------------------------------------------------ */
+.article {
+  max-width: var(--measure-article);
+}
+
+/* ------------------------------------------------------------
+   Шапка статьи: дата + время чтения, заголовок, лид-абзац
+   ------------------------------------------------------------ */
+.article__header {
+  margin-top: var(--space-32);
+}
+
+.article__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+}
+
+.article__meta-sep {
+  width: var(--space-4);
+  height: var(--space-4);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-text-dim);
+}
+
+.article__title {
+  margin-top: var(--space-16);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-115);
+}
+
+/* Лид-абзац: серое описание под заголовком, флаг hideLead скрывает его
+   у части статей (см. content/blog/meta.json). Курсив антиквы — тот же
+   приём, что подзаголовок книги (.section-book__subtitle). */
+.article__description {
+  margin-top: var(--space-20);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-19);
+  line-height: var(--line-height-145);
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+   Оглавление: флаг hideToc скрывает блок у части статей
+   ------------------------------------------------------------ */
+.article__toc {
+  margin-top: var(--space-44);
+  padding: var(--space-28) var(--space-32);
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.article__toc-title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-11);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-14);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.article__toc-list {
+  margin-top: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  counter-reset: article-toc;
+}
+
+.article__toc-list li {
+  counter-increment: article-toc;
+}
+
+.article__toc-list a {
+  font-size: var(--font-size-15);
+  color: var(--color-accent);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.article__toc-list a::before {
+  content: counter(article-toc) '. ';
+  color: var(--color-text-dim);
+}
+
+.article__toc-list a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ------------------------------------------------------------
+   Тело статьи: типографика перенесённого HTML-контента
+   (content/blog/*.html) — заголовки, абзацы, списки, figure,
+   плюс три особых класса из исходного контента.
+   ------------------------------------------------------------ */
+.article__body {
+  margin-top: var(--space-44);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-160);
+  color: var(--color-text);
+}
+
+.article__body > * + * {
+  margin-top: var(--space-24);
+}
+
+.article__body h2 {
+  margin-top: var(--space-60);
+  font-size: var(--font-size-26);
+  line-height: var(--line-height-125);
+  scroll-margin-top: calc(var(--size-header-height) + var(--space-20));
+}
+
+.article__body h3 {
+  margin-top: var(--space-40);
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-125);
+}
+
+.article__body p,
+.article__body li {
+  color: var(--color-text-muted);
+}
+
+.article__body strong {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.article__body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-strong);
+  text-underline-offset: 0.2em;
+  transition: color var(--duration-fast) var(--ease-standard),
+    text-decoration-color var(--duration-fast) var(--ease-standard);
+}
+
+.article__body a:hover {
+  color: var(--color-accent-hover);
+  text-decoration-color: var(--color-accent-hover);
+}
+
+/* Кнопки внутри текста (например «Откликнуться через HR-бота» на странице
+   «Работа у нас»): правило для ссылок выше перебивало цвет и подчёркивание
+   .button--accent из base.css, текст сливался с золотой подложкой.
+   Замечание Петра 17.09.2026. */
+.article__body a.button {
+  text-decoration: none;
+}
+
+.article__body a.button--accent,
+.article__body a.button--accent:hover {
+  color: var(--color-on-accent);
+}
+
+.article__body a.button--ghost {
+  color: var(--color-text);
+}
+
+.article__body a.button--ghost:hover {
+  color: var(--color-accent);
+}
+
+.article__body ul,
+.article__body ol {
+  padding-left: var(--space-24);
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.article__body ol {
+  list-style: decimal;
+}
+
+.article__body figure {
+  margin-top: var(--space-32);
+}
+
+.article__body figure img {
+  width: 100%;
+  border: var(--border-width) solid var(--color-border);
+}
+
+/* Видео с YouTube внутри статьи: рамка держит пропорцию 16:9 на любой
+   ширине, поэтому плеер не вылезает за колонку на узких экранах. */
+.article__body .video__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.article__body .video__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.article__body figcaption {
+  margin-top: var(--space-10);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+  text-align: center;
+}
+
+/* Лид-абзац внутри контента (первый абзац у части статей — отличается
+   от .article__description выше: это часть самого HTML-контента, а не
+   отдельное поле, см. content/blog/*.html). */
+.article__body .lead {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-19);
+  line-height: var(--line-height-145);
+  color: var(--color-text);
+}
+
+/* Врезка-предупреждение */
+.article__body .warning {
+  padding: var(--space-20) var(--space-24);
+  background-color: var(--color-accent-soft);
+  border: var(--border-width) solid var(--color-accent-dim);
+  color: var(--color-text);
+}
+
+.article__body .warning strong {
+  color: var(--color-accent);
+}
+
+/* Промт или цитата, которую читатель может скопировать к себе
+   (статья про вайбкодинг, 19.09.2026) */
+.article__body blockquote.prompt {
+  margin-inline: 0;
+  padding: var(--space-20) var(--space-24);
+  background-color: var(--color-surface-2);
+  border-left: var(--space-4) solid var(--color-accent);
+}
+
+.article__body blockquote.prompt p {
+  color: var(--color-text);
+}
+
+.article__body blockquote.prompt p + p {
+  margin-top: var(--space-12);
+}
+
+/* Длинный документ целиком (например PRD) в окне с прокруткой, чтобы он
+   не растягивал статью, но его можно было прочитать полностью */
+.article__body .doc-scroll {
+  max-height: 32rem;
+  overflow-y: auto;
+  padding: var(--space-24);
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border-strong);
+  font-size: var(--font-size-15);
+}
+
+.article__body .doc-scroll > * + * {
+  margin-top: var(--space-12);
+}
+
+.article__body .doc-scroll h3,
+.article__body .doc-scroll h4,
+.article__body .doc-scroll h5 {
+  margin-top: var(--space-24);
+  font-size: var(--font-size-17);
+  line-height: var(--line-height-125);
+  color: var(--color-text);
+}
+
+.article__body .doc-scroll > :first-child {
+  margin-top: 0;
+}
+
+.article__body .doc-scroll p,
+.article__body .doc-scroll li {
+  font-size: var(--font-size-15);
+}
+
+.article__body .doc-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.article__body .doc-scroll th,
+.article__body .doc-scroll td {
+  padding: var(--space-6) var(--space-8);
+  border: var(--border-width) solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+  color: var(--color-text-muted);
+}
+
+.article__body .doc-scroll pre {
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.article__body .doc-scroll-caption {
+  margin-top: var(--space-10);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+  text-align: center;
+}
+
+/* Команды и имена файлов внутри текста */
+.article__body code {
+  padding: 0 var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--color-text);
+  background-color: var(--color-surface-3);
+  border-radius: var(--radius-sm);
+}
+
+/* Блок призыва к действию */
+.article__body .cta-block {
+  padding: var(--space-32);
+  background-color: var(--color-surface-2);
+  border: var(--border-width) solid var(--color-border-strong);
+}
+
+.article__body .cta-block h3 {
+  margin-top: 0;
+  font-size: var(--font-size-22);
+}
+
+.article__body .cta-block ul {
+  margin-top: var(--space-16);
+  padding-left: 0;
+  list-style: none;
+}
+
+.article__body .cta-block a {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ------------------------------------------------------------
+   Карточка автора в конце статьи — фото, имя, короткая биография,
+   контакты. Текст берётся из content/home.<lang>.json (author_card),
+   см. single.php.
+   ------------------------------------------------------------ */
+.article__author {
+  display: flex;
+  gap: var(--space-24);
+  align-items: flex-start;
+  margin-top: var(--space-60);
+  padding: var(--space-24);
+  background-color: var(--color-surface-2);
+  border: var(--border-width) solid var(--color-border-strong);
+}
+
+.article__author-photo {
+  flex-shrink: 0;
+  width: var(--space-64);
+  height: var(--space-64);
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+}
+
+.article__author-name {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-19);
+  font-weight: var(--font-weight-bold);
+}
+
+.article__author-bio {
+  margin-top: var(--space-6);
+  color: var(--color-text-dim);
+  font-size: var(--font-size-14-5);
+  line-height: var(--line-height-145);
+}
+
+.article__author-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  margin-top: var(--space-12);
+  font-size: var(--font-size-14-5);
+}
+
+.article__author-links a {
+  color: var(--color-accent);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.article__author-links a:hover {
+  color: var(--color-accent-hover);
+}
+
+@media (max-width: 600px) {
+  .article__author {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ------------------------------------------------------------
+   «Читать дальше»: две другие статьи + возврат на главную
+   ------------------------------------------------------------ */
+.article__related {
+  margin-top: var(--space-80);
+  padding-top: var(--space-60);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.article__related-title {
+  font-size: var(--font-size-20);
+}
+
+.article__related-list {
+  margin-top: var(--space-24);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--border-width);
+  background-color: var(--color-border);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.article__related-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-24);
+  background-color: var(--color-surface-1);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.article__related-card:hover {
+  background-color: var(--color-surface-2);
+}
+
+.article__related-meta {
+  font-size: var(--font-size-12-5);
+  color: var(--color-text-dim);
+}
+
+.article__related-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-19);
+  line-height: var(--line-height-125);
+  color: var(--color-text);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.article__related-card:hover .article__related-card-title {
+  color: var(--color-accent);
+}
+
+.article__back-home {
+  display: inline-block;
+  margin-top: var(--space-24);
+  font-size: var(--font-size-14-5);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.article__back-home:hover {
+  color: var(--color-text);
+}
+
+@media (max-width: 600px) {
+  .article__related-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------------------
+   Форма заявки в конце статьи — та же разметка, что sections/contact.php
+   (см. inc/contact-form.php), поэтому переиспользует .section-contact__*
+   классы из assets/css/sections/contact.css. Здесь только обёртка и её
+   заголовок: сама форма визуально ничем не отличается от формы на главной.
+   ------------------------------------------------------------ */
+.article__contact {
+  margin-top: var(--space-80);
+}
+
+.article__contact-title {
+  font-size: var(--font-size-26);
+}
+
+.article__contact-subtitle {
+  margin-top: var(--space-12);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-15);
+}
+
+.article__contact .section-contact__form {
+  margin-top: var(--space-28);
+}
+
+/* ------------------------------------------------------------
+   Ссылка "Все статьи" в самом низу страницы
+   ------------------------------------------------------------ */
+.article__footer-nav {
+  margin-top: var(--space-60);
+}
+
+.article__footer-nav a {
+  font-size: var(--font-size-14-5);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.article__footer-nav a:hover {
+  color: var(--color-text);
+}
+
+/* Врезка с призывом связаться, между оглавлением и текстом статьи.
+   Была на старом сайте ровно в одной статье, вернули 19.08.2026.
+   Оформление тем же приёмом, что карточка автора ниже: подложка,
+   мягкая рамка, скругление, всё через токены. */
+.article__promo {
+  margin: var(--space-40) 0;
+  padding: var(--space-24);
+  background-color: var(--color-surface-2);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.article__promo-title {
+  font-size: var(--font-size-19);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-10);
+}
+
+.article__promo-text {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-20);
+  max-width: var(--measure-prose-narrow);
+}
+
+.article__promo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+}
+
+/* ------------------------------------------------------------
+   Секция главной внутри страницы (шорткод [home_block], page.php):
+   текст до и после неё стоит отдельными колонками, секция между ними
+   на всю ширину. Отступы у стыков меньше обычного section-pad, иначе
+   вокруг секции получается двойной провал.
+   ------------------------------------------------------------ */
+.article--before-block {
+  padding-bottom: var(--space-64);
+}
+
+.article--after-block {
+  padding-top: var(--space-64);
+}
+
+.article--after-block > .article__body:first-child {
+  margin-top: 0;
+}
+
+/* Раскрывающиеся примеры внутри страницы (<details>): готовые тексты
+   рассылок на странице партнёрской программы /ru/partners, 03.10.2026.
+   Свёрнуты по умолчанию, чтобы длинные примеры не растягивали страницу. */
+.article__body details {
+  margin-top: var(--space-16);
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-surface-2);
+  padding: var(--space-12) var(--space-16);
+}
+
+.article__body details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.article__body details summary:hover,
+.article__body details summary:focus-visible {
+  color: var(--color-accent);
+}
+
+.article__body details[open] summary {
+  margin-bottom: var(--space-12);
+}
+
+/* Раскрывающиеся разделы страницы (<details class="toggle"> с <h2> внутри
+   <summary>), как заголовки-переключатели в Notion. Перенесено со страницы
+   партнёрской программы 03.10.2026. Перебивают общий стиль .article__body
+   details выше: у раздела нет рамки и фона, только линия сверху и стрелка. */
+.article__body details.toggle {
+  margin-top: 0;
+  padding: 0;
+  border: 0;
+  border-top: var(--border-width) solid var(--color-border);
+  background: none;
+}
+
+.article__body details.toggle:last-of-type {
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.article__body details.toggle > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding-block: var(--space-18);
+  list-style: none;
+  font-weight: inherit;
+}
+
+.article__body details.toggle > summary::-webkit-details-marker {
+  display: none;
+}
+
+.article__body details.toggle > summary::before {
+  content: "";
+  flex: none;
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  transform: rotate(-45deg);
+}
+
+.article__body details.toggle[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+.article__body details.toggle > summary h2 {
+  margin: 0;
+}
+
+.article__body details.toggle[open] > summary {
+  margin-bottom: 0;
+}
+
+.article__body details.toggle > .toggle__body {
+  padding-bottom: var(--space-20);
+}
+
+.article__body details.toggle > .toggle__body > :first-child {
+  margin-top: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .article__body details.toggle > summary::before {
+    transition: transform 0.15s ease;
+  }
+}
+
+/* ------------------------------------------------------------
+   Страница «Партнёрская программа» /ru/partners (03.10.2026, просьба
+   Петра: начало страницы было мелким и невыразительным). Класс
+   .article-page--partners ставит page.php по слагу страницы, поэтому
+   статьи блога и «Работа у нас» не меняются.
+   ------------------------------------------------------------ */
+.article-page--partners .article__description {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-145);
+  color: var(--color-text);
+}
+
+.article-page--partners .article__body {
+  font-size: var(--font-size-17);
+}
+
+.article-page--partners .article__body .lead {
+  font-style: normal;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-28);
+  line-height: var(--line-height-125);
+  padding-left: var(--space-20);
+  border-left: 2px solid var(--color-accent);
+}
+
+/* Три условия партнёрки карточками: крупная цифра и подпись под ней. */
+.article__body .reward-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-12);
+  padding: 0;
+  list-style: none;
+}
+
+.article__body .reward-grid > li {
+  margin: 0;
+  padding: var(--space-20);
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-surface-1);
+}
+
+.article__body .reward-grid__value {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-40);
+  line-height: var(--line-height-110);
+  color: var(--color-accent);
+}
+
+.article__body .reward-grid__label {
+  display: block;
+  margin-top: var(--space-10);
+  font-size: var(--font-size-15);
+  line-height: var(--line-height-135);
+  color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+  .article__body .reward-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Секция главной внутри свёрнутого раздела ([home_block inline="1"]):
+   без собственного фона, рамок и больших отступов, по ширине колонки. */
+.article__body .home-block-inline > section {
+  padding-block: 0;
+  background: none;
+  border: 0;
+}
+
+.article__body .home-block-inline .container {
+  max-width: none;
+  padding-inline: 0;
+}
+
+.article__body .home-block-inline .container > :first-child {
+  margin-top: 0;
+}
+
+/* Правила текста статьи выше (.article__body ul/li/p/figure/a) сильнее по
+   селектору, чем стили секции, и ломали её внутри раздела: клиенты шли по
+   одному в ряд, отрасли списком с маркерами, отзывы серым текстом с
+   отступом сверху. Возвращаем секции её собственное оформление. */
+.article__body .home-block-inline ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.article__body .home-block-inline .section-social-proof__clients {
+  flex-direction: row;
+  gap: var(--space-12);
+}
+
+.article__body .home-block-inline .section-social-proof__niches {
+  display: grid;
+  gap: var(--border-width);
+}
+
+.article__body .home-block-inline li,
+.article__body .home-block-inline .testimonial-card__quote p {
+  color: var(--color-text);
+}
+
+.article__body .home-block-inline figure {
+  margin-top: 0;
+}
+
+.article__body .home-block-inline a {
+  text-decoration: none;
+}
+
+.article__body .home-block-inline .testimonial-card__photo {
+  width: var(--size-avatar-sm);
+  border: var(--border-width) solid var(--color-border-strong);
+}
+
+@media (max-width: 640px) {
+  .article-page--partners .article__body .lead {
+    font-size: var(--font-size-22);
+  }
+
+  .article-page--partners .article__description {
+    font-size: var(--font-size-17);
+  }
+}

@@ -1,0 +1,196 @@
+/* ============================================================
+   СЕКЦИЯ: publications
+   ============================================================
+   Горизонтальная прокрутка карточек. Вьюпорт растянут на всю
+   ширину секции (не ограничен .container), сам список карточек
+   выровнен по левому краю контейнера через паддинг — так лента
+   уходит вправо за пределы контентной колонки, как в премиум-лендингах.
+   ============================================================ */
+.section-publications {
+  background-color: var(--color-bg);
+  border-bottom: var(--border-width) solid var(--color-border);
+  overflow: hidden;
+}
+
+.section-publications__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-24);
+  margin-bottom: var(--space-52);
+}
+
+.section-publications__heading {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+  color: var(--color-text);
+}
+
+.section-publications__subheading {
+  margin-top: var(--space-16);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+}
+
+/* ------------------------------------------------------------
+   Кнопки-стрелки: прогрессивное улучшение. Без JS клик по ним
+   ничего не делает, но сама лента листается свайпом/трекпадом —
+   см. комментарий в publications.php.
+   ------------------------------------------------------------ */
+.pub-controls {
+  display: flex;
+  gap: var(--space-10);
+  flex-shrink: 0;
+}
+
+.pub-scroll-btn {
+  width: var(--size-scroll-button);
+  height: var(--size-scroll-button);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: 50%;
+  color: var(--color-text);
+  font-size: var(--font-size-22);
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.pub-scroll-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------
+   Лента: нативная прокрутка со снапом, скроллбар скрыт —
+   визуальный контроль дают кнопки и сам жест свайпа/трекпада.
+   ------------------------------------------------------------ */
+.pub-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.pub-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.pub-track {
+  display: flex;
+  gap: var(--space-20);
+  scroll-snap-type: x proximity;
+  padding-bottom: var(--space-4);
+}
+
+.pub-card {
+  flex: 0 0 var(--size-pub-card-width);
+  scroll-snap-align: start;
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
+}
+
+.pub-card:hover {
+  background-color: var(--color-surface-2);
+  border-color: var(--color-border-strong);
+}
+
+.pub-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pub-card__media {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background-color: var(--color-surface-3);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.pub-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Обложка не загрузилась (внешний хост недоступен/сменил адрес) —
+   <img> скрыт через onerror, остаётся ровная поверхность и буква
+   площадки посередине, ни дыры, ни битой иконки. */
+.pub-card__fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: var(--font-size-40);
+  color: var(--color-text-dim);
+}
+
+.pub-card__media:not(.is-broken) .pub-card__fallback {
+  display: none;
+}
+
+.pub-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--space-10);
+  padding: var(--space-20);
+}
+
+.pub-card__platform {
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-16);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+.pub-card__title {
+  font-size: var(--font-size-15);
+  line-height: var(--line-height-145);
+  color: var(--color-text);
+}
+
+.pub-card__read {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  font-size: var(--font-size-12);
+  color: var(--color-text-dim);
+  margin-top: auto;
+  padding-top: var(--space-6);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.pub-card:hover .pub-card__read {
+  color: var(--color-accent);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+  .section-publications__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-20);
+  }
+
+  .pub-controls {
+    display: none;
+  }
+
+  .pub-card {
+    flex-basis: calc(var(--size-pub-card-width) * 0.85);
+  }
+}

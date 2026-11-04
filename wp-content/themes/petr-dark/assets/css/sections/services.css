@@ -1,0 +1,778 @@
+/* ============================================================
+   СЕКЦИЯ «services»: «Как со мной поработать»
+   ============================================================
+   Вариант Б с холста «Мои проекты: карточки» (25.10.2026):
+   сверху строка соцсетей (замена Taplink), дальше группы форматов.
+   Главный формат крупнее остальных и с единственной залитой кнопкой,
+   у остальных кнопка контуром. Внизу строка «Не знаете, что выбрать?»
+   и строка «Ещё» с второстепенными ссылками.
+   Карточки на тонкой границе без теней и скруглений, как на всём сайте.
+   Все значения только через var(--...), см. tokens.css.
+   ============================================================ */
+
+.section-services {
+  padding-block: var(--space-120);
+  background-color: var(--color-bg);
+}
+
+.section-services__head {
+  max-width: var(--size-section-head-max-width);
+  margin-bottom: var(--space-44);
+}
+
+.section-services__eyebrow {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-16);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-services__heading {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+  margin-top: var(--space-12);
+}
+
+/* «Соцсети» над каналами */
+.section-services__subheading {
+  margin-bottom: var(--space-14);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-16);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Строка каналов: только названия, без подписей (правка Петра 25.10.2026). */
+.section-services__channels {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-12);
+  margin-bottom: var(--space-64);
+}
+
+.section-services__channel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-14);
+  padding: var(--space-18) var(--space-20);
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.section-services__channel:hover {
+  background-color: var(--color-surface-2);
+}
+
+.section-services__channel-icon {
+  flex-shrink: 0;
+  width: var(--size-channel-icon);
+  height: var(--size-channel-icon);
+  stroke-width: var(--stroke-width-icon);
+  color: var(--color-accent);
+}
+
+.section-services__channel-title {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-15);
+  line-height: var(--line-height-125);
+}
+
+.section-services__channel-arrow {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-standard), transform var(--duration-base) var(--ease-standard);
+}
+
+.section-services__channel:hover .section-services__channel-arrow {
+  color: var(--color-accent);
+  transform: translate(var(--space-2), calc(var(--space-2) * -1));
+}
+
+/* ---------- Переключатель порядка (29.10.2026) ----------
+   Два варианта на одной дорожке: «Сначала познакомимся» и «Только
+   хардкор». Ползунок едет под выбранный вариант; у хардкора он залит
+   акцентом, у знакомства спокойный. Движение только transform и
+   opacity, без перерасчёта раскладки. */
+
+.section-services__order {
+  display: flex;
+  align-items: center;
+  gap: var(--space-20);
+  margin-bottom: var(--space-44);
+}
+
+.section-services__order[hidden] {
+  display: none;
+}
+
+.section-services__order-label {
+  flex-shrink: 0;
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-26);
+  line-height: var(--line-height-110);
+}
+
+.section-services__order-switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  flex: 1;
+  max-width: var(--size-section-head-max-width);
+  padding: var(--space-4);
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.section-services__order-thumb {
+  position: absolute;
+  top: var(--space-4);
+  bottom: var(--space-4);
+  left: var(--space-4);
+  width: calc(50% - var(--space-4));
+  background-color: var(--color-surface-3);
+  border: var(--border-width) solid var(--color-border-strong);
+  transition: transform var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+}
+
+.section-services__order-switch[data-active="1"] .section-services__order-thumb {
+  transform: translateX(100%);
+}
+
+.section-services__order-switch[data-hot] .section-services__order-thumb {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.section-services__order-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-16);
+  text-align: left;
+  color: var(--color-text-muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.section-services__order-option:hover {
+  color: var(--color-text);
+}
+
+.section-services__order-option[aria-pressed="true"] {
+  color: var(--color-text);
+  cursor: default;
+}
+
+.section-services__order-switch[data-hot] .section-services__order-option[aria-pressed="true"] {
+  color: var(--color-on-accent);
+}
+
+.section-services__order-option:focus-visible {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: var(--space-2);
+}
+
+.section-services__order-icon {
+  flex-shrink: 0;
+  width: var(--size-order-icon);
+  height: var(--size-order-icon);
+  stroke-width: var(--stroke-width-icon);
+}
+
+.section-services__order-option[aria-pressed="true"] .section-services__order-icon.is-popping {
+  animation: services-order-pop var(--duration-order-icon) var(--ease-standard);
+}
+
+.section-services__order-option--hardcore[aria-pressed="true"] .section-services__order-icon.is-popping {
+  animation-name: services-order-flare;
+}
+
+.section-services__order-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.section-services__order-title {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-15);
+  line-height: var(--line-height-125);
+}
+
+.section-services__order-note {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12);
+  line-height: var(--line-height-125);
+  opacity: var(--opacity-order-note);
+}
+
+/* Книга слегка раскачивается, пламя вспыхивает и подрагивает. */
+@keyframes services-order-pop {
+  0% { transform: rotate(0); }
+  35% { transform: rotate(var(--motion-order-icon-tilt)) scale(var(--motion-order-icon-scale)); }
+  70% { transform: rotate(calc(var(--motion-order-icon-tilt) * -0.5)); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes services-order-flare {
+  0% { transform: scale(1); }
+  30% { transform: scale(var(--motion-order-icon-scale)) translateY(calc(var(--space-2) * -1)); }
+  50% { transform: scale(1) rotate(calc(var(--motion-order-icon-tilt) * 0.5)); }
+  70% { transform: scale(var(--motion-order-icon-flicker)) rotate(calc(var(--motion-order-icon-tilt) * -0.5)); }
+  100% { transform: scale(1); }
+}
+
+/* Скролл не цепляется за группы, пока они меняются местами: экран
+   остаётся на переключателе. */
+.section-services__groups {
+  overflow-anchor: none;
+}
+
+.section-services__group.is-moving {
+  position: relative;
+  transition: transform var(--duration-reorder) var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-services__order-thumb,
+  .section-services__group.is-moving {
+    transition: none;
+  }
+
+  .section-services__order-icon.is-popping {
+    animation: none !important;
+  }
+}
+
+/* ---------- Группы форматов ---------- */
+
+.section-services__group + .section-services__group {
+  margin-top: var(--space-44);
+}
+
+.section-services__group-title {
+  margin-bottom: var(--space-18);
+  padding-bottom: var(--space-14);
+  border-bottom: var(--border-width) solid var(--color-border);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-28);
+  line-height: var(--line-height-100);
+}
+
+.section-services__grid {
+  display: grid;
+  gap: var(--space-12);
+}
+
+/* Группа с главным форматом: широкая карточка и одна узкая рядом. */
+.section-services__grid--lead {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+}
+
+.section-services__grid--cols-1 { grid-template-columns: minmax(0, 1fr); }
+.section-services__grid--cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.section-services__grid--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.section-services__grid--cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ---------- Карточка ---------- */
+
+.section-services__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.section-services__card:hover {
+  background-color: var(--color-surface-2);
+}
+
+/* Карточка с одной ссылкой кликается целиком: ссылка растянута
+   псевдоэлементом, сама кнопка остаётся видимой подписью. */
+.section-services__card--linked .section-services__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.section-services__media {
+  flex: 0 0 var(--size-services-art-band);
+  height: var(--size-services-art-band);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-art-bg);
+  color: var(--color-text);
+}
+
+.section-services__art {
+  width: 74%;
+  height: var(--size-services-art-fill);
+  fill: none;
+  stroke-width: var(--stroke-width-services-art);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.section-services__art .is-accent-fill {
+  fill: var(--color-accent);
+}
+
+.section-services__art .is-accent-stroke {
+  stroke: var(--color-accent);
+}
+
+.section-services__art .is-on-accent-stroke {
+  stroke: var(--color-on-accent);
+}
+
+.section-services__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-20) var(--space-24) var(--space-24);
+}
+
+.section-services__badge {
+  align-self: flex-start;
+  padding: var(--space-4) var(--space-10);
+  background-color: var(--color-accent);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-11);
+  letter-spacing: var(--tracking-12);
+  text-transform: uppercase;
+  color: var(--color-on-accent);
+}
+
+.section-services__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-26);
+  line-height: var(--line-height-110);
+}
+
+.section-services__title-short,
+.section-services__short {
+  display: none;
+}
+
+.section-services__desc {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-14-5);
+  line-height: var(--line-height-145);
+  color: var(--color-text-muted);
+}
+
+.section-services__topics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  margin-top: var(--space-4);
+}
+
+.section-services__topic {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-12) var(--space-14);
+  background-color: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.section-services__topic-title {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-14-5);
+}
+
+.section-services__topic-text {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-13);
+  color: var(--color-text-muted);
+}
+
+.section-services__bullets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-10) var(--space-20);
+  margin-top: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-15);
+  line-height: var(--line-height-135);
+}
+
+.section-services__bullets li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-10);
+}
+
+.section-services__bullets li::before {
+  content: "";
+  flex: 0 0 var(--size-services-bullet);
+  height: var(--size-services-bullet);
+  background-color: var(--color-accent);
+  transform: translateY(calc(var(--space-2) * -1));
+}
+
+.section-services__actions {
+  margin-top: auto;
+  padding-top: var(--space-10);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-14) var(--space-24);
+}
+
+/* Кнопка формата: контуром. Залитая только у главного формата и в строке
+   «Не знаете, что выбрать?», чтобы в блоке была одна главная кнопка. */
+.section-services__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-10) var(--space-14);
+  border: var(--border-width) solid var(--color-accent);
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-13);
+  color: var(--color-accent);
+  transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+}
+
+.section-services__link-arrow {
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+
+.section-services__card:hover .section-services__link-arrow,
+.section-services__link:hover .section-services__link-arrow,
+.section-services__help:hover .section-services__link-arrow {
+  transform: translateX(var(--space-4));
+}
+
+.section-services__link--primary {
+  padding: var(--space-14) var(--space-24);
+  background-color: var(--color-accent);
+  font-size: var(--font-size-15);
+  color: var(--color-on-accent);
+}
+
+.section-services__link--primary:hover,
+.section-services__help:hover .section-services__link--primary {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.section-services__more-link {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-14-5);
+  color: var(--color-text);
+  border-bottom: var(--border-width) solid var(--color-border-strong);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.section-services__more-link:hover {
+  color: var(--color-accent);
+}
+
+/* ---------- Главный формат ---------- */
+
+.section-services__card--featured {
+  flex-direction: row-reverse;
+}
+
+.section-services__card--featured .section-services__media {
+  flex: 0 0 var(--size-services-lead-art-width);
+  height: auto;
+}
+
+.section-services__card--featured .section-services__art {
+  width: 82%;
+  height: auto;
+}
+
+.section-services__card--featured .section-services__body {
+  gap: var(--space-14);
+  padding: var(--space-34) var(--space-40);
+}
+
+.section-services__card--featured .section-services__title {
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-100);
+}
+
+.section-services__card--featured .section-services__desc {
+  max-width: var(--size-section-head-max-width);
+  font-size: var(--font-size-16);
+}
+
+/* ---------- «Не знаете, что выбрать?» и «Ещё» ---------- */
+
+.section-services__help {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-24);
+  margin-top: var(--space-44);
+  padding: var(--space-24) var(--space-28);
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text);
+}
+
+.section-services__help-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.section-services__help-title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-26);
+  line-height: var(--line-height-110);
+}
+
+.section-services__help-note {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-14-5);
+  color: var(--color-text-muted);
+}
+
+.section-services__extras {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-14) var(--space-28);
+  margin-top: var(--space-40);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-15);
+}
+
+.section-services__extras-label {
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-16);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-services__extra {
+  padding-bottom: var(--space-2);
+  border-bottom: var(--border-width) solid var(--color-border-strong);
+  color: var(--color-text);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.section-services__extra:hover {
+  color: var(--color-accent);
+}
+
+.section-services__extra span {
+  color: var(--color-accent);
+}
+
+.section-services__extra--plain {
+  border-bottom: 0;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Планшет ---------- */
+
+@media (max-width: 980px) {
+  .section-services__channels,
+  .section-services__grid--cols-3,
+  .section-services__grid--cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .section-services__grid--lead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .section-services__card--featured {
+    flex-direction: column;
+  }
+
+  .section-services__card--featured .section-services__media {
+    flex-basis: var(--size-services-lead-art-band-mobile);
+    height: var(--size-services-lead-art-band-mobile);
+  }
+
+  .section-services__card--featured .section-services__art {
+    height: var(--size-services-art-fill);
+  }
+}
+
+/* ---------- Телефон ---------- */
+/* Главный формат остаётся карточкой, остальные форматы сжимаются в строки
+   списка: миниатюра слева, короткий заголовок и строка, кнопка текстом. */
+
+@media (max-width: 600px) {
+  .section-services {
+    padding-block: var(--space-64);
+  }
+
+  .section-services__channels {
+    gap: var(--space-6);
+    margin-bottom: var(--space-40);
+  }
+
+  .section-services__channel {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-10);
+    padding: var(--space-14);
+  }
+
+  .section-services__channel-arrow {
+    display: none;
+  }
+
+  .section-services__head {
+    margin-bottom: var(--space-32);
+  }
+
+  .section-services__order {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-12);
+    margin-bottom: var(--space-32);
+  }
+
+  .section-services__order-label {
+    font-size: var(--font-size-22);
+  }
+
+  .section-services__order-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    padding: var(--space-10) var(--space-12);
+  }
+
+  .section-services__group + .section-services__group {
+    margin-top: var(--space-32);
+  }
+
+  .section-services__group-title {
+    margin-bottom: var(--space-14);
+    padding-bottom: var(--space-10);
+    font-size: var(--font-size-26);
+  }
+
+  .section-services__grid,
+  .section-services__grid--cols-2,
+  .section-services__grid--cols-3,
+  .section-services__grid--cols-4 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+
+  .section-services__card:not(.section-services__card--featured) {
+    flex-direction: row;
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__media {
+    flex: 0 0 var(--size-services-thumb);
+    height: auto;
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__art {
+    width: 84%;
+    height: auto;
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__body {
+    justify-content: center;
+    gap: var(--space-4);
+    padding: var(--space-12) var(--space-14);
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__title {
+    font-size: var(--font-size-20);
+  }
+
+  .section-services__title-full {
+    display: none;
+  }
+
+  .section-services__title-short {
+    display: inline;
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__desc,
+  .section-services__short {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-12-5);
+    line-height: var(--line-height-135);
+    color: var(--color-text-muted);
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__topics {
+    display: none;
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__actions {
+    margin-top: 0;
+    padding-top: var(--space-2);
+  }
+
+  .section-services__card:not(.section-services__card--featured) .section-services__link {
+    padding: 0;
+    border: 0;
+  }
+
+  .section-services__card--featured .section-services__body {
+    padding: var(--space-20) var(--space-18);
+  }
+
+  .section-services__bullets {
+    grid-template-columns: minmax(0, 1fr);
+    font-size: var(--font-size-14-5);
+  }
+
+  .section-services__card--featured .section-services__link--primary {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .section-services__help {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-18);
+  }
+
+  .section-services__help .section-services__link--primary {
+    justify-content: center;
+  }
+
+  .section-services__extras {
+    flex-direction: column;
+    gap: var(--space-12);
+    font-size: var(--font-size-14-5);
+  }
+}

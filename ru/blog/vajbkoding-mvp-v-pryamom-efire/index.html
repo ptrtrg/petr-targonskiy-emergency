@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,c=null;try{c=localStorage.getItem("petr-theme");}catch(e){}if(c!=='light'&&c!=='dark'){c='system';}d.setAttribute('data-theme-choice',c);d.setAttribute('data-theme',c!=='system'?c:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));})();</script>
+<script>
+(function(m,e,t,r,i,k,a){
+  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+ym(55185025, "init", {
+  clickmap: true,
+  trackLinks: true,
+  accurateTrackBounce: true,
+  webvisor: true
+});
+</script>
+    <link rel="icon" href="/wp-content/themes/petr-dark/media/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/wp-content/themes/petr-dark/media/favicon-512.png" type="image/png" sizes="512x512" />
+<link rel="apple-touch-icon" href="/wp-content/themes/petr-dark/media/apple-touch-icon.png" sizes="180x180" />
+
+<!-- Search Engine Optimization by Rank Math - https://rankmath.com/ -->
+<title>Вайбкодинг для себя и своей компании: собираем MVP за один воркшоп &mdash; Пётр Таргонский</title>
+<meta name="description" content="Методичка по воркшопу: как за 50 минут кодинга собрать с ИИ-агентами работающий трекер привычек. PRD, правки комментариями, Claude Design, коммиты и инструменты."/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+<link rel="canonical" href="https://petr-targonskiy.com/ru/blog/vajbkoding-mvp-v-pryamom-efire" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Вайбкодинг для себя и своей компании: собираем MVP за один воркшоп" />
+<meta property="og:description" content="Методичка по воркшопу: как за 50 минут кодинга собрать с ИИ-агентами работающий трекер привычек. PRD, правки комментариями, Claude Design, коммиты и инструменты." />
+<meta property="og:url" content="https://petr-targonskiy.com/ru/blog/vajbkoding-mvp-v-pryamom-efire" />
+<meta property="og:site_name" content="Пётр Таргонский" />
+<meta property="article:section" content="Uncategorized" />
+<meta property="og:image" content="https://petr-targonskiy.com/wp-content/uploads/2026/11/vajbkoding-mvp-v-pryamom-efire.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Вайбкодинг для себя и своей компании: собираем MVP за один воркшоп" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="article:published_time" content="2026-09-19T09:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Вайбкодинг для себя и своей компании: собираем MVP за один воркшоп &mdash; Пётр Таргонский" />
+<meta name="twitter:description" content="Методичка по воркшопу: как за 50 минут кодинга собрать с ИИ-агентами работающий трекер привычек. PRD, правки комментариями, Claude Design, коммиты и инструменты." />
+<meta name="twitter:image" content="https://petr-targonskiy.com/wp-content/uploads/2026/11/vajbkoding-mvp-v-pryamom-efire.jpg" />
+<meta name="twitter:label1" content="Time to read" />
+<meta name="twitter:data1" content="30 minutes" />
+<script type="application/ld+json" class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://petr-targonskiy.com/#person","name":"\u041f\u0451\u0442\u0440 \u0422\u0430\u0440\u0433\u043e\u043d\u0441\u043a\u0438\u0439","url":"https://petr-targonskiy.com/ru","jobTitle":"\u041e\u0441\u043d\u043e\u0432\u0430\u0442\u0435\u043b\u044c Systemmatica \u00b7 \u041e\u043f\u0435\u0440\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0439 \u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440 \u0414\u0430\u0442\u0430\u0420\u0443 \u00b7 \u0410\u0432\u0442\u043e\u0440 \u043a\u043d\u0438\u0433\u0438 \u00b7 \u0421\u043f\u0438\u043a\u0435\u0440","image":"https://petr-targonskiy.com/wp-content/themes/petr-dark/media/portrait-presskit.webp","description":"\u0421\u0438\u0441\u0442\u0435\u043c\u0430\u0442\u0438\u0437\u0438\u0440\u0443\u044e \u0431\u0438\u0437\u043d\u0435\u0441: \u0418\u0418-\u0430\u0433\u0435\u043d\u0442\u044b, \u0431\u0430\u0437\u044b \u0437\u043d\u0430\u043d\u0438\u0439, \u0440\u0435\u0433\u043b\u0430\u043c\u0435\u043d\u0442\u044b, CRM, \u0434\u0430\u0448\u0431\u043e\u0440\u0434\u044b. 12 \u043b\u0435\u0442 \u043e\u043f\u044b\u0442\u0430, 60+ \u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0432.","worksFor":{"@type":"Organization","name":"Systemmatica","url":"https://systemmatica.com"},"knowsAbout":["Business Systematization","Knowledge Management","Business Process Management","CRM Systems","AI for Business"],"sameAs":["https://t.me/PTargonskiy","https://systemmatica.com","https://t.me/petr_targonskiy","https://www.youtube.com/@petrtargonskiy","https://vc.ru/u/1166553-petr-targonskiy"]},{"@type":"WebSite","@id":"https://petr-targonskiy.com/#website","url":"https://petr-targonskiy.com","name":"\u041f\u0451\u0442\u0440 \u0422\u0430\u0440\u0433\u043e\u043d\u0441\u043a\u0438\u0439","publisher":{"@id":"https://petr-targonskiy.com/#person"},"inLanguage":"ru-RU"},{"@type":"ImageObject","@id":"https://petr-targonskiy.com/wp-content/uploads/2026/11/vajbkoding-mvp-v-pryamom-efire.jpg","url":"https://petr-targonskiy.com/wp-content/uploads/2026/11/vajbkoding-mvp-v-pryamom-efire.jpg","width":"1200","height":"630","inLanguage":"ru-RU"},{"@type":"WebPage","@id":"https://petr-targonskiy.com/ru/blog/vajbkoding-mvp-v-pryamom-efire#webpage","url":"https://petr-targonskiy.com/ru/blog/vajbkoding-mvp-v-pryamom-efire","name":"\u0412\u0430\u0439\u0431\u043a\u043e\u0434\u0438\u043d\u0433 \u0434\u043b\u044f \u0441\u0435\u0431\u044f \u0438 \u0441\u0432\u043e\u0435\u0439 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438: \u0441\u043e\u0431\u0438\u0440\u0430\u0435\u043c MVP \u0437\u0430 \u043e\u0434\u0438\u043d \u0432\u043e\u0440\u043a\u0448\u043e\u043f \u2014 \u041f\u0451\u0442\u0440 \u0422\u0430\u0440\u0433\u043e\u043d\u0441\u043a\u0438\u0439","datePublished":"2026-09-19T09:00:00+00:00","dateModified":"2026-09-19T09:00:00+00:00","isPartOf":{"@id":"https://petr-targonskiy.com/#website"},"primaryImageOfPage":{"@id":"https://petr-targonskiy.com/wp-content/uploads/2026/11/vajbkoding-mvp-v-pryamom-efire.jpg"},"inLanguage":"ru-RU"},{"@type":"BlogPosting","headline":"\u0412\u0430\u0439\u0431\u043a\u043e\u0434\u0438\u043d\u0433 \u0434\u043b\u044f \u0441\u0435\u0431\u044f \u0438 \u0441\u0432\u043e\u0435\u0439 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438: \u0441\u043e\u0431\u0438\u0440\u0430\u0435\u043c MVP \u0437\u0430 \u043e\u0434\u0438\u043d \u0432\u043e\u0440\u043a\u0448\u043e\u043f \u2014 \u041f\u0451\u0442\u0440 \u0422\u0430\u0440\u0433\u043e\u043d\u0441\u043a\u0438\u0439","datePublished":"2026-09-19T09:00:00+00:00","dateModified":"2026-09-19T09:00:00+00:00","articleSection":"Uncategorized","author":{"@id":"https://petr-targonskiy.com/#person"},"publisher":{"@id":"https://petr-targonskiy.com/#person"},"description":"\u041c\u0435\u0442\u043e\u0434\u0438\u0447\u043a\u0430 \u043f\u043e \u0432\u043e\u0440\u043a\u0448\u043e\u043f\u0443: \u043a\u0430\u043a \u0437\u0430 50 \u043c\u0438\u043d\u0443\u0442 \u043a\u043e\u0434\u0438\u043d\u0433\u0430 \u0441\u043e\u0431\u0440\u0430\u0442\u044c \u0441 \u0418\u0418-\u0430\u0433\u0435\u043d\u0442\u0430\u043c\u0438 \u0440\u0430\u0431\u043e\u0442\u0430\u044e\u0449\u0438\u0439 \u0442\u0440\u0435\u043a\u0435\u0440 \u043f\u0440\u0438\u0432\u044b\u0447\u0435\u043a. PRD, \u043f\u0440\u0430\u0432\u043a\u0438 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u044f\u043c\u0438, Claude Design, \u043a\u043e\u043c\u043c\u0438\u0442\u044b \u0438 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b.","name":"\u0412\u0430\u0439\u0431\u043a\u043e\u0434\u0438\u043d\u0433 \u0434\u043b\u044f \u0441\u0435\u0431\u044f \u0438 \u0441\u0432\u043e\u0435\u0439 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438: \u0441\u043e\u0431\u0438\u0440\u0430\u0435\u043c MVP \u0437\u0430 \u043e\u0434\u0438\u043d \u0432\u043e\u0440\u043a\u0448\u043e\u043f \u2014 \u041f\u0451\u0442\u0440 \u0422\u0430\u0440\u0433\u043e\u043d\u0441\u043a\u0438\u0439","@id":"https://petr-targonskiy.com/ru/blog/vajbkoding-mvp-v-pryamom-efire#richSnippet","isPartOf":{"@id":"https://petr-targonskiy.com/ru/blog/vajbkoding-mvp-v-pryamom-efire#webpage"},"image":{"@id":"https://petr-targonskiy.com/wp-content/uploads/2026/11/vajbkoding-mvp-v-pryamom-efire.jpg"},"inLanguage":"ru-RU","mainEntityOfPage":{"@id":"https://petr-targonskiy.com/ru/blog/vajbkoding-mvp-v-pryamom-efire#webpage"}}]}</script>
+<!-- /Rank Math WordPress SEO plugin -->
+
+<link rel="alternate" type="application/rss+xml" title="Пётр Таргонский &raquo; Feed" href="https://petr-targonskiy.com/ru/feed" />
+<link rel="alternate" type="application/rss+xml" title="Пётр Таргонский &raquo; Comments Feed" href="https://petr-targonskiy.com/ru/comments/feed" />
+<link rel='stylesheet' id='wp-block-library-css' href='/wp-includes/css/dist/block-library/style.min.css?ver=6.6.2' media='all' />
+<style id='classic-theme-styles-inline-css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='petr-dark-tokens-css' href='/wp-content/themes/petr-dark/assets/css/tokens.css?ver=1793269576' media='all' />
+<link rel='stylesheet' id='petr-dark-base-css' href='/wp-content/themes/petr-dark/assets/css/base.css?ver=1791030432' media='all' />
+<link rel='stylesheet' id='petr-dark-article-css' href='/wp-content/themes/petr-dark/assets/css/blocks/article.css?ver=1791021180' media='all' />
+<link rel='stylesheet' id='petr-dark-section-contact-css' href='/wp-content/themes/petr-dark/assets/css/sections/contact.css?ver=1790579859' media='all' />
+<link rel="https://api.w.org/" href="/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://petr-targonskiy.com/wp-json/wp/v2/posts/56" />
+<link rel='shortlink' href='/?p=56' />
+<link rel="icon" href="/wp-content/themes/petr-dark/media/favicon-512.png" sizes="32x32" />
+<link rel="icon" href="/wp-content/themes/petr-dark/media/favicon-512.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/wp-content/themes/petr-dark/media/favicon-512.png" />
+<meta name="msapplication-TileImage" content="/wp-content/themes/petr-dark/media/favicon-512.png" />
+</head>
+<body class="post-template-default single single-post postid-56 single-format-standard wp-embed-responsive">
+<noscript><div><img src="https://mc.yandex.ru/watch/55185025" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    
+<a class="skip-link screen-reader-text" href="#main">Перейти к содержимому</a>
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <a class="site-header__logo" href="/ru">
+      Пётр Таргонский    </a>
+
+    <input type="checkbox" id="site-nav-toggle" class="site-header__toggle-input">
+
+    <nav class="site-header__nav" aria-label="Основная навигация">
+      <ul class="site-header__menu">
+                <li data-nav-drop="6">
+          <a href="/ru#services">Услуги</a>
+        </li>
+                <li>
+          <a href="/ru#dataru">Кейсы</a>
+        </li>
+                <li data-nav-drop="5">
+          <a href="/ru#industries">Клиенты</a>
+        </li>
+                <li data-nav-drop="4">
+          <a href="/ru#about">Обо мне</a>
+        </li>
+                <li data-nav-drop="3">
+          <a href="/ru#book">Книга</a>
+        </li>
+                <li data-nav-drop="2">
+          <a href="/ru#publications">Публикации</a>
+        </li>
+                <li data-nav-drop="1">
+          <a href="/ru#podcasts">Подкасты</a>
+        </li>
+                        <li class="site-header__menu-sep" aria-hidden="true"></li>
+                <li>
+          <a href="/ru/vacancies">Работа у нас</a>
+        </li>
+                <li>
+          <a href="/ru/partners">Партнёрам</a>
+        </li>
+                        <li class="site-header__menu-sep" aria-hidden="true"></li>
+        <li>
+          <a href="/ru/blog" class="site-header__link-accent">
+            Блог          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+            <div class="theme-switch" data-theme-switch data-title="Тема"><button type="button" class="theme-switch__button" aria-haspopup="true" aria-expanded="false" aria-controls="theme-switch-menu" aria-label="Тема" title="Тема"><svg class="theme-switch__icon theme-switch__icon--system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.25" y="4.25" width="17.5" height="12" rx="1.75"/><path d="M8.5 20h7M12 16.25V20"/></svg><svg class="theme-switch__icon theme-switch__icon--light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2.75v1.75M12 19.5v1.75M4.4 4.4l1.25 1.25M18.35 18.35l1.25 1.25M2.75 12H4.5M19.5 12h1.75M4.4 19.6l1.25-1.25M18.35 5.65l1.25-1.25"/></svg><svg class="theme-switch__icon theme-switch__icon--dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.25 14.1A8.25 8.25 0 1 1 9.9 3.75a6.5 6.5 0 0 0 10.35 10.35z"/></svg></button><ul class="theme-switch__menu" id="theme-switch-menu" role="menu" aria-label="Тема" hidden><li role="none"><button type="button" role="menuitemradio" class="theme-switch__option" data-theme-option="system" aria-checked="false"><svg class="theme-switch__option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.25" y="4.25" width="17.5" height="12" rx="1.75"/><path d="M8.5 20h7M12 16.25V20"/></svg><span>Системная</span><svg class="theme-switch__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.25 4.25L19 7"/></svg></button></li><li role="none"><button type="button" role="menuitemradio" class="theme-switch__option" data-theme-option="light" aria-checked="false"><svg class="theme-switch__option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2.75v1.75M12 19.5v1.75M4.4 4.4l1.25 1.25M18.35 18.35l1.25 1.25M2.75 12H4.5M19.5 12h1.75M4.4 19.6l1.25-1.25M18.35 5.65l1.25-1.25"/></svg><span>Светлая</span><svg class="theme-switch__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.25 4.25L19 7"/></svg></button></li><li role="none"><button type="button" role="menuitemradio" class="theme-switch__option" data-theme-option="dark" aria-checked="false"><svg class="theme-switch__option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.25 14.1A8.25 8.25 0 1 1 9.9 3.75a6.5 6.5 0 0 0 10.35 10.35z"/></svg><span>Тёмная</span><svg class="theme-switch__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.25 4.25L19 7"/></svg></button></li></ul></div>      <a class="site-header__lang" href="/en/" hreflang="en">
+        EN      </a>
+      <a class="site-header__cta" href="/ru#contact">
+        Связаться      </a>
+      <label for="site-nav-toggle" class="site-header__burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </label>
+    </div>
+  </div>
+</header>
+<script>(function(){var d=document.documentElement,h=document.querySelector('.site-header__inner');if(!h){return;}var t=document.getElementById('site-nav-toggle'),drop=[].slice.call(h.querySelectorAll('[data-nav-drop]')).sort(function(a,b){return a.getAttribute('data-nav-drop')-b.getAttribute('data-nav-drop');});function over(){return h.scrollWidth>h.clientWidth+1;}window.petrNavFit=function(){if(t&&t.checked){return;}d.classList.remove('nav-compact','nav-partial');drop.forEach(function(li){li.classList.remove('is-nav-dropped');});if(!over()){return;}d.classList.add('nav-partial');for(var i=0;i<drop.length;i++){drop[i].classList.add('is-nav-dropped');if(!over()){return;}}d.classList.remove('nav-partial');drop.forEach(function(li){li.classList.remove('is-nav-dropped');});d.classList.add('nav-compact');};window.petrNavFit();})();</script>
+    <main id="main">
+      <article class="container section-pad article">
+
+        <nav class="article__breadcrumb" aria-label="Хлебные крошки">
+          <a href="/ru">Главная</a>
+          <span aria-hidden="true">/</span>
+          <a href="/ru/blog">Блог</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Статья</span>
+        </nav>
+
+        <header class="article__header">
+          <div class="article__meta">
+            <time datetime="2026-09-19T09:00:00+00:00">19 сентября 2026</time>
+                          <span class="article__meta-sep" aria-hidden="true"></span>
+              <span>25 мин</span>
+                      </div>
+          <h1 class="article__title">Вайбкодинг для себя и своей компании: собираем MVP за один воркшоп</h1>
+                      <p class="article__description">Методичка по воркшопу: как за 50 минут кодинга собрать с ИИ-агентами работающий трекер привычек. PRD, правки комментариями, Claude Design, коммиты и инструменты.</p>
+                  </header>
+
+                  <nav class="article__toc" aria-label="Содержание">
+            <h2 class="article__toc-title">Содержание</h2>
+            <ol class="article__toc-list">
+                              <li><a href="#gde-rabotaet">Где вайбкодинг выстреливает, а где лучше не рисковать</a></li>
+                              <li><a href="#primery">Два примера из практики</a></li>
+                              <li><a href="#golosovanie">Что собирали: голосование</a></li>
+                              <li><a href="#instrument">Claude Code или Codex: не важно</a></li>
+                              <li><a href="#shag-1">Шаг 1. Надиктовать идею и попросить уточняющие вопросы</a></li>
+                              <li><a href="#shag-2">Шаг 2. Исследование лучших практик, которое копится</a></li>
+                              <li><a href="#shag-3">Шаг 3. Упрощённый PRD, который реально прочитать</a></li>
+                              <li><a href="#kommentarii">Фишка: правки комментариями прямо в документе</a></li>
+                              <li><a href="#shag-4">Шаг 4. Реализация армией агентов</a></li>
+                              <li><a href="#dizajn">Claude Design: прототип экранов, как в Figma</a></li>
+                              <li><a href="#mvp">Что должно быть в MVP</a></li>
+                              <li><a href="#rezultat">Что получилось</a></li>
+                              <li><a href="#kak-ne-slomat">Как не сломать то, что уже работало</a></li>
+                              <li><a href="#pravki">Когда правок много: список и задачник</a></li>
+                              <li><a href="#demo-dannye">Демо-данные вместо ТЗ для клиентов</a></li>
+                              <li><a href="#proveryayushchij">Проверяющий агент в конце любой операции</a></li>
+                              <li><a href="#temp">Темп работы команды поменялся</a></li>
+                              <li><a href="#fokus">Два-три процесса параллельно, не больше</a></li>
+                              <li><a href="#instrumenty">Инструменты, которые экономят время каждый день</a></li>
+                              <li><a href="#voprosy">Ответы на вопросы с эфира</a></li>
+                              <li><a href="#itogi">Итоги</a></li>
+                          </ol>
+          </nav>
+        
+        
+        <div class="article__body">
+          <p class="lead">18 сентября я провёл открытый воркшоп: за два часа в прямом эфире мы с участниками собрали работающий прототип трекера целей и привычек с напоминаниями в Telegram. Идею выбрали голосованием, требования надиктовали вместе, код писала армия ИИ-агентов, пока мы разбирали лайфхаки и вопросы. На эфире я обещал сделать методичку, потому что контент получился плотный. Вот она: весь путь по шагам, с промтами, слайдами и кадрами из записи.</p>
+
+<figure class="video">
+  <div class="video__frame">
+    <iframe src="https://www.youtube-nocookie.com/embed/oetGaH1MPPU" title="Приложение для себя и бизнеса: создаём MVP в прямом эфире" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <figcaption>Запись воркшопа целиком</figcaption>
+</figure>
+
+<h2 id="gde-rabotaet">Где вайбкодинг выстреливает, а где лучше не рисковать</h2>
+
+<p>Про вайбкодинг чаще всего рассказывают истории в духе «сделай свой SaaS и стань миллиардером». Обычно их рассказывают те, кто продаёт курсы или что-то вокруг таких проектов. Я сам на этот хайп повёлся, пробовал. Люди, которые заработали, есть. Но неудачных попыток среди тех, кто что-то навайбкодил, кратно больше.</p>
+
+<p>Простой тест: посмотрите на свой телефон. Какие приложения у вас появились за последний год, какие новые подписки? Скорее всего, доставка и пара нейронок. Проектов «мамкиных миллиардеров» там нет, хотя приложений из-за нейронок сейчас выходит в разы больше, чем раньше.</p>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-risk-topchik.webp" alt="Слайд про вайбкодинг: рискованно, сказка и топчик" loading="lazy" />
+  <figcaption>Три зоны: где вайбкодинг рискован, где это сказка, а где топчик</figcaption>
+</figure>
+
+<p><strong>Рискованно: большой сервис на много пользователей.</strong> Аналог Инстаграма, который пишет нейронка, быстро посыплется. Безопасность, нагрузка, масштабирование: если у вас нет хорошего айтишного бэкграунда, особенно по бэкенду, или ИТ-специалиста рядом, вы словите очень много негатива.</p>
+
+<p><strong>Сказка: SaaS и миллионы.</strong> Даже если продукт получится, без налаженного привлечения аудитории он никому не нужен. А это куча процессов, которые лежат далеко за пределами вайбкодинга.</p>
+
+<p><strong>Топчик: под себя и свою компанию.</strong> Личные задачи: трекер привычек, задачник, календарь ухода за ребёнком. Или внутренние инструменты для бизнеса, на чём мы в основном и специализируемся. Нашли проблему, не нашли на рынке готового решения или готовые не устраивают: день-два-три на вайбкодинг, и пользуетесь. Докручиваете в процессе как хотите, не платите много денег разработчикам и не ждёте годами в очереди, пока они что-то сделают.</p>
+
+<h2 id="primery">Два примера из практики</h2>
+
+<h3>Анализатор тендеров</h3>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-tendery.webp" alt="Слайд: кейс анализатора тендеров" loading="lazy" />
+  <figcaption>Каждое утро агент разбирает 15–30 конкурсов, человек открывает только 1–5</figcaption>
+</figure>
+
+<p>У клиента был простой ИИ-анализатор тендеров. Он не умел работать с файлами ТЗ, смотрел только описание, по сути метаданные. И все настройки принадлежали подрядчику. Мы сделали свой анализатор с нормальным интерфейсом: он залезает в ТЗ, а за два месяца к нему добавились поиск ЛПР в LinkedIn, анализ новостей и вакансий компании, чтобы до тендера успеть пообщаться и повысить шансы на победу.</p>
+
+<p>Агрегаторы тендеров на рынке есть. Но так, чтобы нейронкой проанализировать и собрать всё дополнительное, готового нет. Чем ждать, проще сделать своё.</p>
+
+<h3>Генератор документов</h3>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-dokumenty.webp" alt="Слайд: кейс генератора документов" loading="lazy" />
+  <figcaption>5 минут вместо 2–3 часов на комплект документов для заказчика</figcaption>
+</figure>
+
+<p>Тут история смешная. Я пришёл взять интервью у сотрудницы, чтобы собрать контент в базу знаний. А выяснилось, что на ручную подготовку четырёх типов документов у неё каждый раз уходит два-три часа. Сильный сейл вместо того, чтобы продавать, тратит время на бумажки. Причём интеллектуальной работы там ноль, чистая механика.</p>
+
+<p>Мы сделали простейшее приложение: отмечаешь галочками нужные пункты, и комплект документов собирается автоматически. Я получил исходники документов, сделал по аналогии, только автоматически. MVP был готов за сутки, потом одна сессия доработок, и всё, люди пользуются каждый день. Готового решения под нашу компанию просто не существовало.</p>
+
+<p>Посмотрите на этот кейс внимательно, когда будете думать, что сделать у себя. Ищите места, где у вас лютые потери: очень много времени уходит на ручную работу, или готовые решения вообще никак не устраивают. Решить свою локальную бизнес-задачу, не пытаясь заработать на внешних пользователях, это ровно то место, где вы почувствуете эффект быстрее всего.</p>
+
+<p>Оба примера из нашего проекта «Директор на аутсорсе»: это часть того, что мы сделали для одной компании за первые три месяца работы. Там ещё много интересного, подробнее весь кейс я разбирал <a href="https://t.me/petr_targonskiy/471" target="_blank" rel="noopener">в телеграм-канале</a>.</p>
+
+<h2 id="golosovanie">Что собирали: голосование</h2>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-golosovanie.webp" alt="Слайд: варианты приложений для голосования" loading="lazy" />
+  <figcaption>Шесть вариантов на выбор, плюс участники предложили свои</figcaption>
+</figure>
+
+<p>Я заготовил несколько вариантов, но предупредил, что они ни к чему не обязывают. Участники добавили свои: квиз для клиента с персональной рекомендацией, личные финансы. В финал вышли личные финансы, трекер и квиз. Трекер и квиз набрали поровну, как в хорошо срежиссированном реалити-шоу, поэтому решающим стал голос участницы, которая голосовала за личные финансы: она выбрала трекер. Так мы пошли делать <strong>трекер целей и привычек с напоминаниями в Telegram</strong>.</p>
+
+<h2 id="instrument">Claude Code или Codex: не важно</h2>
+
+<p>Я показывал всё в Claude Code, но принципы везде одинаковые. Codex справится с этой задачей точно так же. Каждый день выходят заголовки «новая модель побила все бенчмарки», «убийца Claude Code», «убийца Codex». Их цель привлечь внимание, а не дать пользу. Вникать каждый день, что изменилось, ради того, чтобы решить задачу на 0,5% лучше, смысла мало. Лучше чуть грамотнее формулировать запросы: разительной разницы между топовыми нейронками вы не увидите.</p>
+
+<p>Терминал тоже не обязателен, у Claude есть десктопное приложение. Я пробовал сидеть в нём последние несколько дней, но пока остались моменты, которые меня не устраивают, поэтому работаю в терминале.</p>
+
+<p>Про подписку спрашивали отдельно. На создание приложений тариф за $20 сгорит очень быстро, вы упрётесь в пятичасовое окно лимитов ещё на этапе подготовки. Ориентируйтесь на тариф от $100. Я больше года сидел на нём, а потом перешёл на $200, потому что в одном из проектов мы внедрили агента, который крутится почти постоянно и очень сильно ест лимиты. Для масштаба: на весь цикл «Ритма», от исследования и PRD до сборки, тестов и ревью, по логам сессии ушло около 7 миллионов токенов, большая часть на девять параллельных агентов.</p>
+
+<h2 id="shag-1">Шаг 1. Надиктовать идею и попросить уточняющие вопросы</h2>
+
+<p>Механика такая: мы не пишем ТЗ руками. Даём нейронке описание своими словами, она задаёт уточняющие вопросы и делает PRD (Product Requirements Document, документ с требованиями к продукту). По сути это такое ТЗ, только чуть подробнее. Мы его вычитываем, комментируем, определяем, что войдёт в MVP, и только потом запускаем реализацию.</p>
+
+<p>Пока я набрасывал описание, участники накидывали, что хотят видеть в трекере. Вот что вошло:</p>
+
+<ul>
+  <li><strong>Цели по логике OKR.</strong> Как в бизнесе: большая цель, под ней измеримые результаты, под ними ежедневные действия.</li>
+  <li><strong>Геймификация.</strong> Как делают Uber и Яндекс с таксистами: «до следующей круглой суммы или ачивки не хватает всего одной поездки». Мы сейчас активно внедряем такие элементы в свои продукты, в онбординг сотрудников и изучение базы знаний.</li>
+  <li><strong>Без давления и стыда.</strong> Одна участница рассказала про знакомую, которая перешла с умных часов на механические: надоело, что трекер всё время внушает, что она должна соответствовать какому-то идеалу. Поэтому тон поддерживающий, без FOMO, как хороший родитель с ребёнком: через заботу, а не через «ты не справилась».</li>
+  <li><strong>Итоги каждую неделю, а не раз в две.</strong> В конце недели итоги, в начале следующей план.</li>
+</ul>
+
+<p>Про опечатки, кстати, можно не париться: если смысл не искажён, нейронки прекрасно понимают. Я сам в промте написал «PHD» вместо «PRD», поправил только потому, что это меняет смысл. Вот что в итоге ушло в терминал, почти дословно:</p>
+
+<blockquote class="prompt">
+  <p>Задай мне уточняющие вопросы и сделай PRD-документ. Архитектура, функции, концепция проекта. Не усложняй, пиши только ключевое, чтобы я как не технический специалист вычитал, дал тебе обратную связь с точки зрения продукта, и мы погнали по реализации.</p>
+  <p>Используй скилл для поиска классных референсов. Отдельно изучи геймификацию, чтобы у нас и лучшие наработки других приложений были использованы, и с точки зрения удержания, психологии и геймификации мы использовали самые актуальные наработки.</p>
+</blockquote>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-prompt.webp" alt="Промт в терминале Claude Code: хотелки к трекеру и просьба сделать PRD" loading="lazy" />
+  <figcaption>Так промт выглядел в терминале: сверху надиктованные хотелки, ниже две просьбы</figcaption>
+</figure>
+
+<p>Как видите, никакого rocket science: описал базовые требования, попросил сделать ТЗ и поискать хорошие наработки в интернете. Всё.</p>
+
+<p class="warning"><strong>Главный лайфхак всей работы с нейронками: голосовая диктовка.</strong> Если печатать руками, вам будет эпически лень давать достаточно контекста, промты получатся короткими, и важные детали потеряются. Лучше с «эканьем» и «беканьем» наговорить побольше, чем коротко напечатать. Я для этого сделал своё приложение, <a href="/ru/blog/dictator-diktovka-macos">Dictator</a>, о нём ниже в разделе про инструменты.</p>
+
+<h2 id="shag-2">Шаг 2. Исследование лучших практик, которое копится</h2>
+
+<p>У меня есть скилл Best Practices. Глобально он делает две вещи. Во-первых, ищет по ключевым библиотекам документации для разработчиков: Context7, Ref и Exa. Знания у нейронок фундаментально чуть устаревшие, а там самые свежие версии библиотек. Во-вторых, гуглит бытовые вещи: похожие приложения, психологию, геймификацию.</p>
+
+<p>Важная деталь: всё найденное скилл сохраняет в базу знаний, чтобы в следующий раз не делать тот же анализ заново. У меня таких исследований уже куча: правильная система учёта финансов в бизнесе, лучшие практики по маркетингу 2026 года, по личной эффективности и так далее. Один из участников правильно сказал, что системность работы с нейронкой из таких мелочей и состоит.</p>
+
+<p>Как у меня устроены папки, контекст и скиллы, я подробно показывал с экраном в ролике <a href="https://www.youtube.com/watch?v=ImX8UG9ryhM" target="_blank" rel="noopener">«Что внутри ИИ-агента, который заменяет 3 сотрудников»</a>. Там всё заблюрено, поэтому показать удалось сильно больше, чем без подготовки на эфире.</p>
+
+<p>Пока шло исследование, нейронка задавала вопросы: интерфейс, хранение данных, роль ИИ внутри продукта. Для ускорения я ответил так: веб-версия (iOS-приложение собирается тоже быстро, но на эфире не хотелось терять время), ИИ без всяких API-запросов, демо-данные пусть нейронка придумает сама, а потом прогоним демо-онбординг нового человека.</p>
+
+<h2 id="shag-3">Шаг 3. Упрощённый PRD, который реально прочитать</h2>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-prd-zadachi.webp" alt="Слайд: от PRD до кода, PRD, список задач, выполнение по одной" loading="lazy" />
+  <figcaption>Основа подхода: PRD, список задач, выполнение по одной</figcaption>
+</figure>
+
+<p>Очень рекомендую посмотреть репозиторий <a href="https://github.com/snarktank/ai-dev-tasks" target="_blank" rel="noopener">ai-dev-tasks</a>. Его автор давно занимается разработкой и часто рассказывал про свою методику в подкастах. Она состоит из трёх шагов: один скилл делает PRD, второй режет его на задачи и подзадачи с галочками, дальше подзадачи выполняются по одной, и после каждой нейронка ждёт вашей проверки. Я во многом опирался на этот подход.</p>
+
+<p>Сейчас он частично устарел: репозиторий не обновлялся 11 месяцев, а нейронки уже сами прекрасно режут себе задачи и работают в мультиагентном режиме. К тому же PRD там очень подробный, с user stories и кучей всего. Для обывателя, который делает не высоконагруженный сервис, это перебор. Лучше посмотреть ключевые блоки и дать ключевую обратную связь, чем увидеть много букв, ничего не понять и вообще не прочитать PRD. Но как база, чтобы понимать, как всё работает под капотом, методика классная.</p>
+
+<p>Наш PRD получился простым: концепция, функции, коротко архитектура. Нейронка сама завела папку проекта, положила туда контекст, исследования (референсы, геймификация, OKR) и сам PRD. Я прочитал его по диагонали: мы же не космический корабль делаем. Боли и хотелки участников учтены: OKR с измеримыми результатами, сила привычки, мягкое отношение к пропускам. Мне особенно понравилось последнее. Знаете, как в Duolingo: «1300 дней подряд, стрик будет потерян, ты никто, всё сгорит». Многих это скорее демотивирует.</p>
+
+<p>Вот этот PRD целиком, в той версии, которая пошла в реализацию. Первая версия отличалась только архитектурой: там был полноценный сервер с базой и наш внутренний бот. После моего комментария (о нём ниже) всё стало локальным: одна HTML-страница, маленький сервер на Python и отдельный бот для Telegram. Документ можно прокрутить внутри окна.</p>
+
+<div id="prd-ritm" class="doc-scroll" tabindex="0" role="region" aria-label="PRD трекера «Ритм» целиком">
+<h3>PRD: «Трекер целей и привычек». Демо-продукт</h3>
+<p><strong>Статус:</strong> согласован 18.09.2026, собран<br>
+<strong>Исследования, на которых стоит документ:</strong> <code>research/01-references-oss.md</code> (референсы и open source), <code>research/02-gamification-psychology.md</code> (геймификация и психология), <code>research/03-okr-method-tech.md</code> (личные OKR и техника)</p>
+<h4>1. Зачем это</h4>
+<p><strong>Что делаем.</strong> Веб-приложение, в котором человек ставит цель, разбивает её на измеримые промежуточные результаты и ежедневные привычки, отмечает выполнение, получает напоминания в Telegram и раз в неделю подводит итоги с ИИ-коучем.</p>
+<p><strong>Зачем нам.</strong> Это кейс для клиентов: показываем, как мы собираем ИТ-продукт от идеи до работающей версии. Показ проходит вживую: открываем приложение с готовой историей пользователя, затем при клиенте проводим онбординг нового человека с нуля.</p>
+<p><strong>Какую проблему решает продукт.</strong> Трекеры привычек бросают в первые недели. Причины обычно две. Первая: человеку тычут в недостигнутое («стрик сгорел», «цель не выполнена»), он чувствует себя неудачником и уходит. Вторая: привычки живут отдельно от целей, и непонятно, зачем их делать. Мы связываем привычки с целями по логике бизнес-OKR и строим весь продукт вокруг поддержки, а не давления.</p>
+<h4>2. Концепция в трёх уровнях</h4>
+<table>
+<thead>
+<tr>
+<th>Уровень</th>
+<th>Что это</th>
+<th>Пример</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Цель</strong></td>
+<td>Куда хочу прийти, словами</td>
+<td>«Вернуть себе форму к лету»</td>
+</tr>
+<tr>
+<td><strong>Результаты</strong> (2-3 на цель)</td>
+<td>Как пойму, что пришёл: число и срок</td>
+<td>«Пробежать 10 км без остановки к 1 июня», «Минус 5 кг»</td>
+</tr>
+<tr>
+<td><strong>Привычки</strong></td>
+<td>Что делаю регулярно, чтобы результаты сдвигались</td>
+<td>«Пробежка 3 раза в неделю», «Ужин до 20:00»</td>
+</tr>
+</tbody>
+</table>
+<p>Привычка всегда привязана к результату. Человек видит, что его ежедневные действия двигают что-то большое.</p>
+<p>Результат бывает двух типов:
+- <strong>обязательный</strong>: жду 100%;
+- <strong>амбициозный</strong>: успехом считается уже 70% (так принято в OKR у Google), прогресс-бар зеленеет с 70%.</p>
+<h4>3. Главный принцип: поддерживаем, а не подгоняем</h4>
+<p>Это ядро продукта, и все функции ниже проверяются на соответствие ему.</p>
+<ol>
+<li><strong>Сначала показываем сделанное.</strong> Главный экран отвечает на вопрос «что у меня получилось», а не «сколько осталось». Разрыв «до результата не хватило N» живёт в аналитике и в недельном ревью, подаётся спокойно и с подсказкой, что делать.</li>
+<li><strong>Один пропуск не считается провалом.</strong> Исследования показывают, что пропущенный день не мешает сформировать привычку. Правило «не пропускай дважды»: один пропуск молча прощаем, после второго подряд бот мягко предлагает короткую версию.</li>
+<li><strong>Сила привычки вместо хрупкого стрика.</strong> Показатель от 0 до 100%, который растёт от выполнений и медленно снижается от пропусков, но никогда не обнуляется (так устроен Loop Habit Tracker). Стрик тоже есть, но у него 2 «запасных дня» в неделю, и сгорает он только после третьего пропуска.</li>
+<li><strong>У каждой привычки есть минимум.</strong> «Пробежка 30 минут, минимум 10». Минимум засчитывается как полноценное выполнение. Это убирает логику «всё или ничего», из-за которой люди срываются.</li>
+<li><strong>Первые 14 дней мягкий режим.</strong> Проценты и разрывы до цели не показываем, только победы и ачивки. Задача первых двух недель: чтобы человек дошёл до первой победы и привык открывать приложение.</li>
+<li><strong>Никаких сравнений с другими</strong> и никаких сообщений в духе «твоя привычка умирает».</li>
+<li><strong>Честно про сроки.</strong> Нигде не обещаем «21 день до привычки». По данным исследований у разных людей на это уходит от 2 до 3 месяцев.</li>
+</ol>
+<p>Примеры тона:</p>
+<table>
+<thead>
+<tr>
+<th>Ситуация</th>
+<th>Так не пишем</th>
+<th>Так пишем</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Пропуск двух дней</td>
+<td>«Ты пропустил 2 дня, привычка под угрозой!»</td>
+<td>«Заметил паузу, бывает. Сделаем сегодня короткую версию, 10 минут?»</td>
+</tr>
+<tr>
+<td>Возврат после перерыва</td>
+<td>«Ты не выполнял цель 5 дней»</td>
+<td>«Рад снова видеть. Догонять всё не нужно, с чего начнём?»</td>
+</tr>
+<tr>
+<td>Результат на 65%</td>
+<td>«Цель не достигнута»</td>
+<td>«65% по амбициозной цели, для таких целей это уже успех»</td>
+</tr>
+<tr>
+<td>Неделя не задалась</td>
+<td>«Наверстай прошлую неделю»</td>
+<td>«Новая неделя, чистый лист. Что берём в работу?»</td>
+</tr>
+</tbody>
+</table>
+<h4>4. Функции</h4>
+<h5>4.1 Онбординг и постановка цели</h5>
+<ul>
+<li><strong>Ф1.</strong> Человек пишет цель своими словами («хочу похудеть и больше бегать»).</li>
+<li><strong>Ф2.</strong> ИИ предлагает формулировку цели, 2-3 измеримых результата и 2-4 привычки к ним. Человек правит, убирает лишнее, подтверждает. Решение всегда за человеком: ИИ предлагает, а не назначает.</li>
+<li><strong>Ф3.</strong> Для каждой привычки задаётся минимум, частота и якорь «после чего я это делаю» («после утреннего кофе 10 минут чтения»). Задаётся пошагово, вопрос за вопросом, а не одной большой формой: так формулировка плана работает сильнее.</li>
+<li><strong>Ф4.</strong> Человек выбирает время напоминаний и подключает Telegram.</li>
+<li><strong>Ф5.</strong> Онбординг занимает не больше 5 минут и заканчивается первой победой: первую привычку можно отметить сразу, прогресс-бар стартует не с нуля.</li>
+</ul>
+<h5>4.2 Каждый день</h5>
+<ul>
+<li><strong>Ф6.</strong> Экран «Сегодня»: список привычек на день, отметка в одно касание, два варианта «сделал» / «сделал минимум».</li>
+<li><strong>Ф7.</strong> После отметки короткая реакция: засчитано, как выросла сила привычки, к чему это приближает.</li>
+<li><strong>Ф8.</strong> Напоминание в Telegram: не больше одного в день на привычку, каждое можно выключить. Отмечаем привычку на странице.</li>
+</ul>
+<h5>4.3 Прогресс и аналитика</h5>
+<ul>
+<li><strong>Ф9.</strong> Экран цели: результаты с прогресс-барами, привычки с силой привычки и календарём выполнений.</li>
+<li><strong>Ф10.</strong> Аналитика «сколько не хватило» по каждому результату, в трёх видах:</li>
+<li>сколько осталось: «до 10 км осталось 3 км»;</li>
+<li>прогноз: «при текущем темпе к 1 июня выйдешь на 8,5 км»;</li>
+<li>что поменять: «чтобы успеть, нужно 4 пробежки в неделю вместо 3».
+  Всегда с пометкой «по текущему темпу», без красного цвета и восклицаний.</li>
+</ul>
+<h5>4.4 Недельное ревью (по понедельникам)</h5>
+<ul>
+<li><strong>Ф11.</strong> Раз в неделю бот зовёт на ревью. Порядок всегда один:</li>
+<li><strong>Что получилось</strong>: цифры недели, выполненные привычки, новые ачивки. Всегда первым пунктом.</li>
+<li><strong>Что мешало</strong>: вопрос «что помешало?», а не «почему не сделал».</li>
+<li><strong>Что упростить</strong>: если привычка стабильно не идёт, ИИ предлагает её облегчить («10 минут вместо 30», «2 раза вместо 3»).</li>
+<li><strong>План на следующую неделю</strong>: максимум 1-2 изменения, чтобы не перекраивать всё сразу.</li>
+<li><strong>Ф12.</strong> ИИ пишет короткий итог недели человеческим языком и сохраняет его в историю.</li>
+<li><strong>Ф13.</strong> Каждую неделю подаём как новую главу: прошлые пропуски в новую неделю долгом не переносятся.</li>
+</ul>
+<h5>4.5 Геймификация</h5>
+<ul>
+<li><strong>Ф14.</strong> Ачивки. Даём за движение и возвращение, а не только за идеальный результат. Примеры: «Первый шаг», «Первая полная неделя», «Возвращение» (снова в ритме после паузы), «Не пропустил дважды», «Личный рекорд», «Экономный режим» (7 раз закрыл минимум, тоже засчитано), «Полпути до результата».</li>
+<li><strong>Ф15.</strong> Промежуточные вехи: результат делится на отрезки (25/50/75%). Каждая веха отмечается, и сразу появляется следующая. Так рядом всегда есть близкая цель.</li>
+<li><strong>Ф16.</strong> Экран «Мои победы»: лента ачивок, личные рекорды, лучшие недели. Сюда ведёт кнопка из недельного ревью.</li>
+<li><strong>Ф17.</strong> Ачивки ничего не открывают и не закрывают. Они показывают прогресс, а всё приложение доступно всегда.</li>
+</ul>
+<h5>4.6 Демо-режим</h5>
+<ul>
+<li><strong>Ф18.</strong> Готовый демо-пользователь с историей за 6 недель: 2 цели, 5 привычек, 5 недельных ревью, ачивки, один «провальный» отрезок и возвращение после него. На нём видно, как продукт ведёт себя в хорошие и в плохие недели.</li>
+<li><strong>Ф19.</strong> Кнопка «Начать с нуля» для живого онбординга при клиенте.</li>
+<li><strong>Ф20.</strong> Кнопка «Прислать напоминание сейчас», чтобы на встрече показать, как сообщение приходит в Telegram.</li>
+</ul>
+<h4>5. Что НЕ делаем в демо</h4>
+<ul>
+<li>Соревнования, рейтинги, друзья, общие цели.</li>
+<li>Оплату, тарифы, регистрацию по email (вход одной кнопкой или сразу демо-пользователь).</li>
+<li>Мобильное приложение: адаптивная веб-версия, открывается и с телефона.</li>
+<li>Отдельную инфраструктуру для Telegram: хватает одного бота и прямого вызова Bot API.</li>
+<li>Реальные вызовы ИИ по API (см. раздел 6).</li>
+<li>Сервер с базой, вход, публичную ссылку: всё локально на ноутбуке.</li>
+<li>Английский язык сейчас, но всё подготовлено к его добавлению.</li>
+</ul>
+<h4>6. Архитектура (коротко)</h4>
+<p>Всё локально, без сборки и без внешних сервисов, кроме Telegram (решение по ходу проекта: «проще, это демо»).</p>
+<pre><code> Страница в браузере (HTML + JS) → маленький локальный сервер → Telegram-бот → Telegram
+                                          ↓
+                                   папка-очередь для ИИ-запросов
+</code></pre>
+<ul>
+<li><strong>Приложение</strong>: одна интерактивная HTML-страница. Данные хранятся в браузере, кнопка «Сбросить к демо» возвращает исходное состояние.</li>
+<li><strong>Локальный сервер</strong> (один файл на Python, без фреймворков): отдаёт страницу и отправляет сообщения в Telegram через Bot API. Токен бота остаётся на сервере и в страницу не попадает.</li>
+<li><strong>Telegram</strong>: напоминания, мягкое «небольшая пауза, так бывает», новые ачивки, приглашение на ревью, итог недели. Сообщения приходят в указанный в настройках чат.</li>
+<li><strong>ИИ без API</strong>: демо-историю и итоги недель заранее написал ИИ. При живом онбординге запрос из страницы кладётся в папку-очередь, ИИ-агент (или человек) отвечает на него через <code>ai_inbox.py</code>. Если ответа нет, есть кнопка «Взять заготовку».</li>
+<li><strong>Расчёты кодом, смысл ИИ</strong>: силу привычки, стрик, прогноз и разрыв до цели считает код по формулам. Формулировки, итоги недели и предложения облегчить привычку делает ИИ.</li>
+<li><strong>Поддерживаемость</strong>: весь текст интерфейса и сообщений лежит в одном словаре (русский, с заделом под другие языки). Цвета, шрифты и отступы заданы дизайн-токенами.</li>
+<li><strong>Запуск</strong>: одна команда, дальше страница открывается на <code>http://localhost:8765</code>.</li>
+</ul>
+<h4>7. Как поймём, что демо удалось</h4>
+<ul>
+<li>Живой онбординг нового человека при клиенте занимает до 5 минут, от «хочу…» до первой отмеченной привычки.</li>
+<li>Напоминание приходит в Telegram во время показа.</li>
+<li>На демо-пользователе видно все ключевые экраны: сегодня, цель с аналитикой, недельное ревью, мои победы.</li>
+<li>В интерфейсе и сообщениях бота нет ни одной стыдящей формулировки (прогоняем тексты через чек-лист из раздела 3).</li>
+<li>Клиент после показа понимает, как мы работаем: исследование, PRD, задачи, сборка, проверка. Сам путь тоже часть демо.</li>
+</ul>
+<h4>8. Решения по открытым вопросам</h4>
+<ol>
+<li><strong>Демо-персонаж</strong>: Анна, 34 года, руководитель отдела. Цели «Вернуть форму» и «Прочитать 12 книг за год».</li>
+<li><strong>Отметка прямо в Telegram</strong>: не в демо, отмечаем на странице.</li>
+<li><strong>Публичная ссылка</strong>: не нужна, показ с ноутбука.</li>
+<li><strong>Название продукта</strong>: «Ритм».</li>
+</ol>
+</div>
+<p class="doc-scroll-caption">PRD «Ритма», финальная версия. Он же лежит в <a href="https://github.com/ptrtrg/ritm-demo/blob/main/docs/prd.md" target="_blank" rel="noopener">репозитории проекта</a></p>
+
+<h2 id="kommentarii">Фишка: правки комментариями прямо в документе</h2>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-kommentarii.webp" alt="Слайд: правки комментариями, правило в CLAUDE.md и стикеры в /design" loading="lazy" />
+  <figcaption>Правка стоит ровно там, к чему относится</figcaption>
+</figure>
+
+<p>Когда получаете большой документ и хотите прокомментировать конкретную строчку или абзац, не пишите в чат «а вот в том абзаце, где про...». Вы очень долго будете объяснять координаты. Гораздо проще прокомментировать прямо в документе.</p>
+
+<p>PRD и почти всё, что пишут нейронки, это Markdown-файлы: обычный текст с небольшим количеством разметки. Выделяете нужное место двумя знаками равно с каждой стороны, <code>==вот так==</code>, это разметка подсветки, и пишете комментарий. Нейронка отрабатывает каждый такой комментарий как отдельную задачу.</p>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-zettlr.webp" alt="PRD в редакторе Zettlr с комментарием, выделенным жёлтым" loading="lazy" />
+  <figcaption>Мой единственный комментарий в PRD, открытом в Zettlr: «давай ещё проще, всё локально»</figcaption>
+</figure>
+
+<p>Для этого я пользуюсь редактором <a href="https://www.zettlr.com/" target="_blank" rel="noopener">Zettlr</a>, он бесплатный и есть для Mac, Windows и Linux. В чём прелесть: в Cursor и Zed, где я работаю, Markdown показывается двумя способами. Либо как сырой текст со звёздочками и решётками, который трудно читать, особенно таблицы. Либо красиво, но тогда почему-то нельзя редактировать. Zettlr показывает красиво и сразу даёт править. После комментария не забудьте сохранить файл: звёздочка у названия пропала, значит, сохранено.</p>
+
+<p>Чтобы нейронка понимала такие комментарии, один раз опишите правило в <code>CLAUDE.md</code>: как их искать и что с ними делать. Дальше она находит их сама.</p>
+
+<p>Когда PRD прочитан, пишем «оставил комментарий, делай» и переходим к реализации.</p>
+
+<h2 id="shag-4">Шаг 4. Реализация армией агентов</h2>
+
+<p>Промт на реализацию был такой:</p>
+
+<blockquote class="prompt">
+  <p>В рамках этой сессии будь оркестратором, запускай Sonnet-агентов для реализации, где можно распараллеливай. Если нужно, нарежь себе это на задачи, чтобы ничего не забыть и не потерять. После реализации обязательно запусти тесты, чтобы убедиться, что всё работает. Если нужно, поправь.</p>
+</blockquote>
+
+<p>Почему Sonnet: Opus дороже, его хорошо использовать для планирования и анализа, а с реализацией Sonnet справляется прекрасно и ест, по моим ощущениям, процентов на 35 меньше токенов. Плюс пара волшебных слов. <code>ultracode</code> принудительно запускает так называемый динамический воркфлоу, по сути армию агентов. <code>TaskCreate</code> заводит список задач, по которому видно прогресс.</p>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-agenty.webp" alt="Терминал: несколько агентов собирают приложение параллельно" loading="lazy" />
+  <figcaption>План оркестратора: сборка, интеграция, проверка с трёх сторон, исправления. Внизу прогресс: 2 из 4 агентов готовы</figcaption>
+</figure>
+
+<p>Если заглянуть под капот, видно, как это идёт: четыре агента-сборщика параллельно, потом интеграция, ревью и исправления. Раньше, во времена методики ai-dev-tasks, нейронки так не умели. Контекстные окна были маленькие, агенты не умели общаться друг с другом и запускать друг друга, поэтому приходилось постоянно их фокусировать: «Родной, перед каждой задачей прочитай PRD, прочитай список задач, сделай свою подзадачу и поставь галочку». Сейчас окно у Opus на миллион токенов, а рой агентов гоняет себя сам.</p>
+
+<p>Чистый кодинг после готового PRD занял около 45–50 минут. Нейронка в какой-то момент сама открыла браузер и проверяла вёрстку: смотрела экраны, делала себе скриншоты. Это, кстати, самый наглядный показатель магии нейронок, когда она у тебя на глазах что-то делает в браузере за тебя.</p>
+
+<h2 id="dizajn">Claude Design: прототип экранов, как в Figma</h2>
+
+<p>Пока шла сборка, я попросил отдельную сессию: «Нарисуй, пожалуйста, прототип трёх экранов, супер заморачиваться не надо, мне просто нужно продемонстрировать функционал». Для реального продукта я бы, конечно, попросил изучить лучшие практики дизайна, продумать юзабилити и задать вопросы.</p>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-claude-design.webp" alt="Claude Design: прототип трёх экранов трекера привычек" loading="lazy" />
+  <figcaption>Прототип трёх экранов в Claude Design, поверх него окно комментария</figcaption>
+</figure>
+
+<p>Claude Design очень похож на Figma: можно кликнуть на любой элемент, поменять размеры, отступы, передвинуть блоки мышкой вместо того, чтобы писать «передвинь». И что классно, нейронка видит все ваши правки и не считает, что «так и было». Вы с ней в одном контексте.</p>
+
+<p>Комментировать макет можно двумя способами. Базовые комментарии как в Figma, но у них есть проблема: иконки комментариев не закреплены относительно полотна и съезжают при правках. Когда комментариев много, получается мешанина, и уже непонятно, к чему какой относился. Поэтому я оставляю комментарии стикерами (клавиша N): они не разъезжаются, а под ними нейронка пишет отчёт о выполнении. И если не хотите, чтобы правки начали отрабатываться сразу, снимите соответствующую галочку: сначала оставьте все комментарии, потом отработайте их за один заход.</p>
+
+<p class="warning"><strong>Красиво с первого взгляда не значит, что готово.</strong> Это касается текстов, презентаций, сайтов, приложений, чего угодно.</p>
+
+<p>На словах и по смыслу всё выглядит правильно. Но когда начинаешь вникать, выступать по этой презентации, работать по этой инструкции, пользоваться этим приложением, возникает миллиард нюансов в духе «бро, ну почему ты так сделал?». Недавно я попросил нейронку сделать презентацию по большому кейсу: контекст она знала, доступ ко всему был. Выглядело безумно красиво, ключевые слова на местах. Начал вычитывать, а там фигня. В итоге 99% текста написано моими руками. Если не вникать, мир получил бы очередной нейрослоп.</p>
+
+<p>С презентацией для этого воркшопа вышло наоборот. Я накидал структуру, открыл свой шаблон выступления в Figma, и нейронка всё собрала сама, красиво, без единой моей правки, кроме ссылок в конце. Так что с Figma она тоже прекрасно работает.</p>
+
+<h2 id="mvp">Что должно быть в MVP</h2>
+
+<p>Единственное полезное, что я вынес из роликов «сделай свой стартап и стань миллиардером»: в MVP должны быть <strong>красивый дизайн и безупречно работающая базовая функция</strong>. Не гонитесь сразу за фичами.</p>
+
+<p>Типичная история: «Нам не нравится подписка на Битрикс, сделаем свою CRM», и дальше попытка воспроизвести 100% функционала Битрикса. Не надо. Для старта нужна доска с клиентами, ключевыми данными и задачами. Всё. Интеграции, формы, дашборды следующим этапом. Помните мемы про собственника, который за вечер что-то навайбкодил и довольный принёс команде? А там неработающая штука, которую допиливать ещё месяц. Лагающий, неработающий, бессмысленный проект умрёт до рождения.</p>
+
+<p>Ещё один вопрос с эфира: где хранить данные? Для MVP, для одного человека или для локального использования всё безумно просто: локальный файл, туда пишутся данные, и все счастливы. Сложность возрастает раз в десять, когда подключаются облачная синхронизация, несколько пользователей, разграничение доступов. Я на этом когда-то сильно забуксовал со своим стартапом, редактором бизнес-процессов: пока всё было локально, работало идеально и предсказуемо, а как начались интеграции с Google, облачный доступ и совместная работа, пошли приколы.</p>
+
+<h2 id="rezultat">Что получилось</h2>
+
+<p>Название «Ритм» нейронка придумала сама, мы её об этом не просили. Приложение сразу открылось с демо-данными: вымышленная Анна с историей за шесть недель, двумя целями и пятью привычками. Есть экран «Сегодня», цели с аналитикой, победы и ачивки, недельное ревью, напоминания приходят в Telegram.</p>
+
+<p>Для демонстрации этого более чем достаточно. Но интерфейс, который нарисовал Claude Design, сильно симпатичнее того, что собрали агенты: иконки ужасные, градиент отвратительный, где-то маленькие отступы. Первое, что я бы сделал дальше, даже не вникая в отчёт: дал бы ID сессии с дизайном и сказал «подхвати дизайн оттуда, на твой без слёз не взглянешь». И, кстати, не стесняйтесь просить несколько вариантов дизайна сразу: рисует нейронка в самых разных стилях довольно прикольно.</p>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-ritm-efir.webp" alt="«Ритм» на эфире: экран «Мои победы» с ачивками" loading="lazy" />
+  <figcaption>Так «Ритм» выглядел на эфире сразу после сборки: всё работает, но иконки просят доработки</figcaption>
+</figure>
+
+<p>Посмотрите, что произошло: мы написали буквально несколько строчек текста и оставили один комментарий в PRD, и у нас работающая приложуха. Это магия. Но именно тут ловушка, про которую не говорят те, кто продаёт красивые истории. MVP за вечер реален. А довести его до продукта, которым действительно удобно пользоваться, где всё продумано, могут уйти месяцы. Реализация всё ещё быстрая и лёгкая, её делают нейронки. Сложно другое: отловить косяки, потыкаться на личном опыте и правильно дать обратную связь.</p>
+
+<p>Код, PRD и исследования «Ритма» после эфира я доработал и выложил в открытый репозиторий: <a href="https://github.com/ptrtrg/ritm-demo" target="_blank" rel="noopener">github.com/ptrtrg/ritm-demo</a>. Запускается одной командой, зависимостей нет.</p>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-ritm-segodnya.webp" alt="Трекер «Ритм»: экран «Сегодня»" loading="lazy" />
+  <figcaption>«Ритм» после доработок: экран «Сегодня» с демо-данными</figcaption>
+</figure>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-ritm-celi.webp" alt="Трекер «Ритм»: цели и аналитика" loading="lazy" />
+  <figcaption>После доработок: цели по логике OKR, под ними результаты и привычки</figcaption>
+</figure>
+
+<h2 id="kak-ne-slomat">Как не сломать то, что уже работало</h2>
+
+<p>Самый частый вопрос: «Ставлю задачу, вношу правки, первые две нормально, а на пятой нейронка начинает чудить и исправлять то, что не надо». Что с этим делать.</p>
+
+<h3>GitHub и коммит после каждого изменения</h3>
+
+<p>Подключите GitHub и после каждой фичи делайте коммит. Это как резервные копии кода: хранятся все версии, можно откатиться на сколько угодно шагов назад. Описание коммита нейронка напишет сама, вам останется его отправить. Если нейронку понесло, откатываетесь к нужной версии и продолжаете с этого места. 99% работы с коммитами я делаю не кнопками, а просто в диалоге: «закоммить», «откати к вот этой версии». Нейронка у меня и доступы сотрудникам к репозиториям выдаёт сама: у неё есть справочник сотрудников и их аккаунтов.</p>
+
+<h3>Локальный CLAUDE.md с описанием проекта</h3>
+
+<p>Прошлым летом, когда я только начинал вайбкодить, нейронка регулярно всё забывала: что за проект, что у нас уже есть файл с ключами, что какая-то функция уже написана. Она делала новую функцию рядом со старой, и у меня было четыре куска кода, которые отвечали за одно и то же. В рабочей версии использовался, естественно, только один. Я прошу поправить, она поправляет не тот, я говорю «да что за фигня», а она показывает: «ну я же сделал». Это и есть то неподдерживаемое месиво, на которое ругаются программисты.</p>
+
+<p>Сейчас нейронки держат структуру сильно лучше. А если её задокументировать, становится совсем хорошо. В папке приложения должен лежать локальный <code>CLAUDE.md</code>: концепция, архитектура, какая функция за что отвечает, где что лежит. Руками его писать не надо. Если подхватываете чужой проект или свой, где такого файла нет, запустите команду <code>/init</code>: она сама сделает техническое описание проекта. Экономит тонну времени и убирает кучу ошибок из-за галлюцинаций и дублирующих функций.</p>
+
+<h3>Тесты</h3>
+
+<p>По лучшим практикам разработки регрессионные тесты, которые проверяют, что всё по-прежнему работает, занимают чуть ли не 70–80% всего объёма кода. Хардкорные программисты сначала пишут тесты, а потом код. Для маленьких инструментов под себя мы так не заморачиваемся: потыкались, работает, и окей. Но если начинаете что-то пилить всерьёз, обкладывайтесь тестами, чтобы не было «шнурки завязал, ухо замёрзло».</p>
+
+<h3>Никакого хардкода</h3>
+
+<p>Цвета, шрифты, размеры и тексты в коде должны быть переменными (их ещё называют токенами), а не конкретными значениями. Как в вёрстке сайтов: есть HTML-структура страницы и отдельный CSS-файл со стилями. Поменяли один раз цвет заголовка, и он поменялся во всём приложении. Тексты выносим в словарь, тогда в любой момент можно сказать «а теперь добавь английский» или китайский.</p>
+
+<p>Я на этом обжёгся на своём первом веб-приложении. Интерфейс был как из Windows 90-х, квадратные кнопки, страшно смотреть. Нашёл классные библиотеки, скормил нейронке, она говорит «сделал», а я открываю, и там всё то же унылое. Выяснилось, что всё было захардкожено: она меняла таблицу стилей, а на приложение это никак не влияло. Вычищали долго, за много итераций. Так что говорите нейронке прямым текстом: без хардкода.</p>
+
+<h2 id="pravki">Когда правок много: список и задачник</h2>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-spisok-pravok.webp" alt="Слайд: много правок, ведите список" loading="lazy" />
+  <figcaption>Одна заметка, сверка и парковка</figcaption>
+</figure>
+
+<p>Тыкаете по экранам и находите много чего поправить? Не пишите сразу в чат. Откройте заметку с чекбоксами и заносите всё туда. Потом копируете список, отдаёте нейронке, а после отмечаете галочками, что действительно сделано. Нейронка периодически что-то упускает, по списку это сразу видно. Так я делал свой <a href="/ru/blog/sozidanie-i-bystryy-rezultat">личный сайт</a>: начал в пятницу вечером, закончил в субботу днём, три итерации разноплановых правок.</p>
+
+<p>Если пункт требует долгого мучительного обсуждения, скажите нейронке его припарковать и вернуться к нему позже. Так он не блокирует остальное.</p>
+
+<figure>
+  <img decoding="async" src="/wp-content/themes/petr-dark/media/blog/vajbkoding-zadachnik.webp" alt="Слайд: задач много, заводим задачник" loading="lazy" />
+  <figcaption>Следующий этап: база с идеями, статусами и бэклогом</figcaption>
+</figure>
+
+<p>Когда идей и задач становится совсем много, заведите доску задач в Notion, Trello, где угодно. Приоритизируйте, отмечайте, к какой функции относится задача. Список в доску нейронка перенесёт сама и структурирует. А раз нейронки сейчас прекрасно подключаются ко всем этим платформам, можно сказать: «Бери следующую задачу оттуда, сам отмечай, сам меняй статусы, меня не трогай, вернись, когда станем миллиардерами».</p>
+
+<h2 id="demo-dannye">Демо-данные вместо ТЗ для клиентов</h2>
+
+<p>Ещё один классный сценарий, который мы сейчас активно используем. Приходит клиент, и вместо того, чтобы неделями обсуждать ТЗ, мы проводим встречу, а на следующую приносим работающий прототип. Сколько ТЗ ни пиши, все мелкие нюансы и скрытые хотелки видны, только когда потрогаешь вживую.</p>
+
+<p>Чтобы клиент мог примерить прототип на себя, просим нейронку сделать вымышленные данные: «Вот сайт компании, пофантазируй и сделай игровые данные». Люди видят свой контекст на узнаваемых примерах. То же самое, когда хочется показать скриншоты в кейсе, а клиентские данные светить нельзя: нейронка наполняет копию интерфейса вымышленной информацией, всё один в один, и ни одной клиентской цифры.</p>
+
+<h2 id="proveryayushchij">Проверяющий агент в конце любой операции</h2>
+
+<p>После любого анализа, создания документа, чего угодно мы запускаем отдельного агента-проверяющего с одной строчкой: «Проверь по исходным данным: ничего не забыл, ничего не исказил». Без сложных промтов. Сколько мы такое запускали, даже на самых дорогих моделях, он всегда что-то находит и исправляет.</p>
+
+<h2 id="temp">Темп работы команды поменялся</h2>
+
+<p>С нейронками пришлось по-другому договариваться с сотрудниками про нагрузку и объёмы. Раньше я накидывал обратную связь по приложению под запись минут на 30, и это значило «окей, увидимся через месяц». Сейчас это просто набор задач для нейронки: скопировал, вставил, пошёл пить кофе. Поэтому бывает, что обратную связь дали утром, а результат я хочу увидеть в середине дня. Ребятам, которые пришли из ИТ с привычным скрамом, планом на месяц и спринтом на неделю, приходится перестраиваться, такой ультраскрам. И хорошо, когда вы сами умеете это делать, иначе вам будут рассказывать сказки, что «тут работы на три дня», хотя там один промт.</p>
+
+<p>Что тогда требуется от человека, если между мной и терминалом он просто прослойка? Нести дополнительную ценность. Жёстко бью по рукам за две вещи. Первая: сырой текст от нейронки, отправленный клиенту или команде. Не присылайте портянку, которую надо пролистывать в телеграме: вычитайте и напишите суть своими словами, три тезиса или один ключевой вопрос. Вторая: не проведённые тесты. Если до клиента доехал косяк, который можно было поймать проверкой, вы фактически переложили бета-тестирование на клиента. За что тогда деньги брать?</p>
+
+<h2 id="fokus">Два-три процесса параллельно, не больше</h2>
+
+<p>Поставили задачу, нейронка работает, вы пошли пить чай. Возникает соблазн открыть ещё один терминал и заняться другой задачей. Держите себя в руках: самое сложное для мозга это переключаться между контекстами. Максимум два-три параллельных процесса, иначе к концу дня мозги закипят, а вы не будете понимать почему.</p>
+
+<p>Чтобы не путаться, называйте сессии по понятной схеме. Нейронка даёт название сама, но не всегда удачно, поэтому я пишу «Клиент. Суть» или «Проект. Суть»: «Рекрутинг. Отклики», «Трекер. Код».</p>
+
+<h2 id="instrumenty">Инструменты, которые экономят время каждый день</h2>
+
+<p>На эфире попросили перечислить программы, без которых я уже не работаю. Все для Mac, где знаю, дал аналоги для Windows.</p>
+
+<ul>
+  <li><strong>Диктовка.</strong> Топ-1, об этом выше. На Mac мой <a href="https://systemmatica.com/apps/dictator/?utm_source=petr-targonskiy.com&amp;utm_medium=blog&amp;utm_campaign=vajbkoding" target="_blank" rel="noopener">Dictator</a>, бесплатный. Для Windows есть OmniDictate, WhisperWriter, aTrain.</li>
+  <li><strong>Смена раскладки.</strong> <a href="https://caramba-switcher.com/" target="_blank" rel="noopener">Caramba Switcher</a> для Mac и Windows, около 400 ₽ в год. Написали не на той раскладке, он сам переключит и исправит. Punto Switcher бесплатный, но его купил Яндекс, так что кому важна приватность, берите Caramba.</li>
+  <li><strong>Менеджер буфера обмена.</strong> <a href="https://maccy.app/" target="_blank" rel="noopener">Maccy</a>, бесплатный с сайта. Хранит историю всего скопированного. Особенно важен вместе с диктовкой: она вставляет текст через буфер, и если в момент диктовки вы переключили окно, текст не потеряется, он лежит второй строчкой в истории.</li>
+  <li><strong>Быстрое переключение между приложениями.</strong> <a href="https://apps.apple.com/ru/app/manico/id724472954?mt=12" target="_blank" rel="noopener">Manico</a>: к каждой программе своя клавиша. Я почти не пользуюсь Alt+Tab, потому что там каждый раз ищешь глазами, где Telegram, а где Zoom. Здесь не глядя. На Windows похожее встроено: Win+1…Win+0 для первых десяти приложений на панели задач.</li>
+  <li><strong>Чтобы Mac не засыпал.</strong> Команда <code>caffeinate</code> в терминале или расширение Caffeinate в <a href="https://www.raycast.com/" target="_blank" rel="noopener">Raycast</a>, в настройках Claude тоже есть такая опция. Актуально, когда агент работает долго, а вы ушли за кофе. У меня компьютер вообще работает 24/7: некоторые агенты крутятся постоянно.</li>
+</ul>
+
+<h2 id="voprosy">Ответы на вопросы с эфира</h2>
+
+<h3>С чего начать базу знаний компании</h3>
+
+<p>Одна участница рассказала, что компания перестраивается в процессную, каждый руководитель пишет инструкции по-своему, получается зоопарк, и в одних отделах ими пользуются, а в других нет. Коротко, делай раз-два-три:</p>
+
+<ol>
+  <li><strong>Понять, зачем.</strong> Сформулировать концепцию: какие сейчас проблемы, как база знаний их решит, какое светлое будущее вы хотите. И не абстрактное «прирост продаж на 15%», а что поменяется лично у вас, собственника. Мы на многих проектах заметили: всем сделали одинаково хорошо, но кто-то кайфует и годами продолжает с нами работать, а кто-то сказал спасибо и отвалился. Ключевое: получил ли собственник эффект на своей шкуре.</li>
+  <li><strong>Начать с самой геморройной задачи.</strong> С той, что отнимает у вас время, или с той, что отнимает энергию: два дня настраиваешься, десять минут делаешь, потом ещё полдня плачешь в душе, обняв коленки. Опишите её в инструкции и делегируйте. Не пытайтесь описать сразу всю базу знаний: одну инструкцию сделали и уже кайфанули.</li>
+  <li><strong>Выбрать подход.</strong> От частного к общему: выбесило что-то, сделали инструкцию, выбесило в другом отделе, сделали ещё, идёте от пожара к пожару. От общего к частному: сначала собираете структуру, нагляднее всего по оргструктуре, потому что на каждый отдел и каждую должность нужны свои инструкции. Дальше закрашиваете сделанное на дорожной карте зелёным: и дофамин, и не запутаетесь.</li>
+</ol>
+
+<p>Подробнее я разбирал это в ролике <a href="https://www.youtube.com/watch?v=GhrsI--UwKo" target="_blank" rel="noopener">«5 главных ошибок при внедрении регламентов в бизнесе»</a> и в своей книге <a href="https://systemmatica.com/book/?utm_source=petr-targonskiy.com&amp;utm_medium=blog&amp;utm_campaign=vajbkoding" target="_blank" rel="noopener">«Объясняю один раз»</a>.</p>
+
+<h3>Как вести протоколы встреч</h3>
+
+<p>Мы записываем встречи в Notion AI, но на эти заметки базово даже не смотрим, они больше для истории. Если ждать саммари от нейронки, во-первых, это уже после встречи: все разбежались, и никто не будет сидеть семь минут. Во-вторых, как понять, что она ничего не упустила, если встреча шла полтора часа? Никак, 90% вы забудете.</p>
+
+<p>Ключевое другое: во время встречи люди сами пишут в общий документ «Повестка и бэклог» (Google Docs, Notion, что угодно), и он всё время на демонстрации экрана. Так сразу видно, что человек тебя правильно понял. И не нужно тратить время в конце на «а точно ли мы всё обсудили, давайте сверимся»: всё перед глазами, двойных трактовок нет. Об этом и других инструментах менеджмента у меня есть ролик <a href="https://www.youtube.com/watch?v=urdNEXQQRQE" target="_blank" rel="noopener">«Как создать идеальную команду? 8 советов для предпринимателей»</a>.</p>
+
+<h3>Нейронка или скрипт, если нужна обработка файлов</h3>
+
+<p>Один участник пытался сделать себе читалку под iOS, которая превращает PDF в удобный текст, и застрял: при конвертации слетало форматирование. Автоматизации бывают двух видов. Механические, где нейронка пишет скрипт, который по алгоритму что-то делает. И такие, где нейронка обрабатывает данные сама. Для большинства задач второе проще. Когда мне нужно было распознавать текст со скриншотов переписки с клиентом, нейронка сразу предложила OCR, а он теряет, кто отправитель, кто получатель, время, картинки. Я сказал: «Ты же всё видишь, давай сам», и всё заработало.</p>
+
+<p>Если же обработка должна идти прямо в приложении на телефоне, вариантов три: механический конвертер, вызов нейронки по API или хитрая схема. Файл падает на сервер, сервер замечает новый файл и запускает сессию нейронки по подписке, чтобы не платить за API, а результат возвращается в приложение с пушем. Хитро, но экономит на подписках.</p>
+
+<h3>Где хостить</h3>
+
+<p>Для бесплатных демок нейронка у нас как-то сама выбрала <a href="https://vercel.com/" target="_blank" rel="noopener">Vercel</a>: бесплатно и удобно. Для платного зарубежного сервера я пользовался <a href="https://www.hetzner.com/" target="_blank" rel="noopener">Hetzner</a>, но сейчас требования к регистрации ужесточают, так что проверьте, что попросят у вас.</p>
+
+<h2 id="itogi">Итоги</h2>
+
+<ul>
+  <li><strong>Вайбкодинг</strong> рискован для больших сервисов и топчик для своих задач и своей компании.</li>
+  <li><strong>Примеры:</strong> анализатор тендеров, который каждое утро разбирает 15–30 конкурсов, и генератор документов, который экономит 2–3 часа на комплект.</li>
+  <li><strong>MVP</strong> собрали вместе примерно за 50 минут чистого кодинга после PRD: надиктовать идею, получить вопросы, прочитать упрощённый PRD, запустить агентов.</li>
+  <li><strong>Фишки:</strong> правки комментариями в документе, список хотелок с парковкой, задачник, коммиты, локальный CLAUDE.md, проверяющий агент.</li>
+</ul>
+
+<div class="cta-block">
+<h3>Что дальше</h3>
+<ul>
+  <li>Как собрать ИИ-агента не для кода, а для прикладных задач бизнеса и жизни (онбординг клиента, договоры и счета, сделка из контекста разговора, КП, кросспостинг), я разбираю по шагам на <a href="https://systemmatica.com/ai-course/?utm_source=petr-targonskiy.com&amp;utm_medium=blog&amp;utm_campaign=vajbkoding" target="_blank" rel="noopener">курсе по ИИ</a>.</li>
+  <li>Если хотите, чтобы мы выстроили систему управления и ИИ-агентов руками нашей команды, оставьте заявку в форме ниже.</li>
+  <li>Новые разборы выходят в <a href="https://t.me/petr_targonskiy" target="_blank" rel="noopener">телеграм-канале</a> и на <a href="https://www.youtube.com/@petrtargonskiy" target="_blank" rel="noopener">YouTube</a>.</li>
+</ul>
+</div>
+        </div>
+
+                  <aside class="article__author" aria-label="Пётр Таргонский">
+                          <img
+                class="article__author-photo"
+                src="/wp-content/themes/petr-dark/media/photo.png" srcset="/wp-content/themes/petr-dark/media/photo-160w.webp 160w, /wp-content/themes/petr-dark/media/photo-400w.webp 400w, /wp-content/themes/petr-dark/media/photo.png 600w" sizes="96px"                alt="Пётр Таргонский"
+                width="64"
+                height="64"
+                loading="lazy"
+                decoding="async"
+              >
+                        <div class="article__author-info">
+                              <p class="article__author-name">Пётр Таргонский</p>
+                                            <p class="article__author-bio">Основатель и главный методолог Systemmatica. Автор книги «Объясняю один раз». 60+ клиентских проектов — Россия, США, Аргентина, Испания, Южная Корея.</p>
+                                            <div class="article__author-links">
+                                      <a href="mailto:petr@petr-targonskiy.com">petr@petr-targonskiy.com</a>
+                                                        <a href="https://t.me/PTargonskiy" target="_blank" rel="noopener noreferrer">@PTargonskiy</a>
+                                  </div>
+                          </div>
+          </aside>
+        
+                  <nav class="article__related" aria-label="Читать дальше">
+            <h2 class="article__related-title">Читать дальше</h2>
+            <div class="article__related-list">
+                              <a class="article__related-card" href="/ru/blog/sozidanie-i-bystryy-rezultat">
+                  <span class="article__related-meta">5 мин</span>
+                  <span class="article__related-card-title">Созидание и быстрый результат. Нар**к,* с которого сложно слезть</span>
+                </a>
+                              <a class="article__related-card" href="/ru/blog/dictator-diktovka-macos">
+                  <span class="article__related-meta">8 мин</span>
+                  <span class="article__related-card-title">Почему я написал своё приложение для диктовки на macOS</span>
+                </a>
+                          </div>
+            <a class="article__back-home" href="/ru">
+              &larr; На главную            </a>
+          </nav>
+        
+                  <section class="article__contact" aria-labelledby="article-contact-title">
+            <h2 id="article-contact-title" class="article__contact-title">Обсудить комплексную систематизацию вашего бизнеса</h2>
+            <p class="article__contact-subtitle">Оставьте контакт, расскажу, с чего начать систематизацию в вашем случае</p>
+                <form
+      class="section-contact__form"
+      method="post"
+      novalidate
+      data-petr-contact-form
+      data-form-source="blog"
+      data-metrica-goal="contact_form_submit"    >
+      <p class="section-contact__form-status section-contact__form-status--success" data-role="form-success" role="status" hidden>
+        Сообщение отправлено! Ответим в течение 24 часов.      </p>
+      <p class="section-contact__form-status section-contact__form-status--error" data-role="form-error" role="alert" hidden>
+        Ошибка отправки. Напишите напрямую в Telegram.      </p>
+
+            <input type="hidden" name="article_title" value="Вайбкодинг для себя и своей компании: собираем MVP за один воркшоп">
+      
+            <div class="section-contact__field">
+        <label for="contact-blog-name">Ваше имя</label>
+        <input type="text" id="contact-blog-name" name="name" autocomplete="name" placeholder="Иван Иванов">
+      </div>
+
+      <div class="section-contact__field">
+        <label for="contact-blog-phone">Телефон <span class="section-contact__required" aria-hidden="true">*</span></label>
+        <input type="tel" id="contact-blog-phone" name="phone" autocomplete="tel" required placeholder="+7 (000) 000-00-00">
+      </div>
+
+              <div class="section-contact__field">
+          <label for="contact-blog-email">Email</label>
+          <input type="email" id="contact-blog-email" name="email" autocomplete="email" placeholder="email@example.com">
+        </div>
+      
+              <div class="section-contact__field">
+          <label for="contact-blog-messenger">Мессенджер</label>
+          <select id="contact-blog-messenger" name="messenger">
+                          <option value="Telegram"  selected='selected'>Telegram</option>
+                          <option value="WhatsApp" >WhatsApp</option>
+                          <option value="SMS" >СМС</option>
+                      </select>
+        </div>
+      
+              <div class="section-contact__field">
+          <label for="contact-blog-messenger-id">Ник / номер <span class="section-contact__required" aria-hidden="true">*</span></label>
+          <input type="text" id="contact-blog-messenger-id" name="messenger_id" autocomplete="off" required placeholder="@username">
+        </div>
+      
+      <div class="section-contact__field">
+        <label for="contact-blog-message">Расскажите о задаче</label>
+        <textarea id="contact-blog-message" name="message" rows="4" placeholder="Чем я могу помочь?"></textarea>
+      </div>
+
+      <!-- Поле-ловушка для ботов: реальным пользователям не видно и не
+           доступно с клавиатуры, обработчик (задача 2.2) отбраковывает
+           заявку, если оно заполнено. -->
+      <div class="section-contact__honeypot" aria-hidden="true">
+        <label for="contact-blog-website">Website</label>
+        <input type="text" id="contact-blog-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" class="button button--accent section-contact__submit">
+        Отправить      </button>
+    </form>
+              </section>
+        
+        <div class="article__footer-nav">
+          <a href="/ru/blog">&larr; Все статьи</a>
+        </div>
+
+      </article>
+    </main>
+    <footer class="site-footer">
+  <div class="site-footer__inner container">
+    <div class="site-footer__meta">
+              <span class="site-footer__name">Пётр Таргонский</span>
+            <p class="site-footer__copyright">© 2026 Systemmatica. Все права защищены.</p>
+    </div>
+
+        <ul class="site-footer__social">
+            <li>
+        <a href="/ru/vacancies">Работа у нас</a>
+      </li>
+                  <li>
+        <a href="https://t.me/PTargonskiy" rel="noopener" target="_blank">Telegram</a>
+      </li>
+            <li>
+        <a href="https://systemmatica.com" rel="noopener" target="_blank">systemmatica.com</a>
+      </li>
+          </ul>
+      </div>
+</footer>
+
+<script src="/wp-content/themes/petr-dark/assets/js/nav.js?ver=1791030455" id="petr-dark-nav-js"></script>
+<script src="/wp-content/themes/petr-dark/assets/js/theme.js?ver=1789812476" id="petr-dark-theme-js"></script>
+<script src="/wp-content/themes/petr-dark/assets/js/analytics.js?ver=1790599442" id="petr-dark-analytics-js"></script>
+<script id="petr-dark-form-js-extra">
+var petrDarkForm = {"ajaxUrl":"\/wp-admin\/admin-ajax.php","action":"petr_dark_submit_contact_form","nonce":"2180daf7f8","minFillMs":"2500","metricaId":"55185025","metricaGoal":"contact_form_submit"};
+</script>
+<script src="/wp-content/themes/petr-dark/assets/js/form.js?ver=1786957278" id="petr-dark-form-js"></script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+/* ============================================================
+   СЕКЦИЯ: book
+   ============================================================
+   Обложка + описание сверху, отзывы на книгу снизу (окно с полным
+   текстом и стрелками — assets/js/book-reviews.js).
+   Вёрстка и пропорции: по эталону concept-a-dark-premium.html
+   (.book-wrap, .book-cover, .book-title), дополнено карточками
+   рецензий по системе .testimonial-card оттуда же (в теме своя,
+   локальная копия классов, секции не шарят стили между собой).
+   ============================================================ */
+
+.section-book {
+  padding-block: var(--space-100);
+  background-color: var(--color-bg);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.section-book__wrap {
+  display: grid;
+  grid-template-columns: var(--measure-book-cover) minmax(0, 1fr);
+  gap: var(--space-64);
+  align-items: center;
+}
+
+.section-book__cover {
+  border: var(--border-width) solid var(--color-border-strong);
+  padding: var(--space-10);
+  background-color: var(--color-surface-1);
+}
+
+.section-book__cover img {
+  width: 100%;
+  height: auto;
+}
+
+.section-book__eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-22);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+.section-book__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-book-title);
+  line-height: var(--line-height-115);
+  margin-top: var(--space-18);
+}
+
+.section-book__subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-19);
+  line-height: var(--line-height-135);
+  color: var(--color-text-muted);
+  margin-top: var(--space-14);
+}
+
+.section-book__desc {
+  margin-top: var(--space-20);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+  max-width: var(--measure-prose-narrow);
+}
+
+.section-book__cta {
+  margin-top: var(--space-32);
+}
+
+/* ------------------------------------------------------------
+   Отзывы на книгу (17.09.2026, механика как на systemmatica.com/book)
+   Без скрипта все отзывы видны целиком. Скрипт ставит .is-enhanced:
+   текст карточки обрезается с затуханием, отзывы сверх первых трёх
+   прячутся под кнопку «Показать ещё», клик открывает окно ниже.
+   ------------------------------------------------------------ */
+.section-book__reviews {
+  margin-top: var(--space-80);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-20);
+  align-items: stretch;
+}
+
+.section-book__review {
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--space-32) var(--space-28);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.is-enhanced .section-book__review {
+  cursor: pointer;
+}
+
+.is-enhanced .section-book__review:hover,
+.is-enhanced .section-book__review:focus-visible {
+  border-color: var(--color-border-strong);
+}
+
+.is-enhanced .section-book__review:focus-visible {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: var(--space-2);
+}
+
+.is-enhanced .section-book__review.is-extra:not(.is-shown) {
+  display: none;
+}
+
+.section-book__review-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.section-book__review-person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-14);
+  min-width: 0;
+}
+
+.section-book__review-photo {
+  flex: 0 0 var(--space-46);
+  width: var(--space-46);
+  height: var(--space-46);
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border-strong);
+}
+
+.section-book__review-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-3);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-15);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-1);
+}
+
+.section-book__review-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-family: var(--font-sans);
+}
+
+.section-book__review-name {
+  font-size: var(--font-size-15);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.section-book__review-role {
+  margin-top: var(--space-2);
+  font-size: var(--font-size-13);
+  line-height: var(--line-height-135);
+  color: var(--color-text-muted);
+}
+
+.section-book__review-mark {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-40);
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.section-book__review-body {
+  position: relative;
+  margin-top: var(--space-18);
+  flex: 1 1 auto;
+}
+
+.section-book__review-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-17);
+  line-height: var(--line-height-145);
+  color: var(--color-text);
+}
+
+.section-book__review-text p + p {
+  margin-top: var(--space-12);
+}
+
+/* Обрезка: десять строк текста карточки (17px × 1.45). */
+.is-enhanced .section-book__review-text {
+  max-height: calc(var(--line-height-145) * 10em);
+  overflow: hidden;
+}
+
+.is-enhanced .section-book__review.has-toggle .section-book__review-body::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--space-60);
+  background: linear-gradient(180deg, transparent 0%, var(--color-surface-1) 85%);
+  pointer-events: none;
+}
+
+.section-book__review-toggle {
+  display: none;
+  align-self: flex-start;
+  margin-top: var(--space-16);
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-14-5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.section-book__review-toggle:hover {
+  color: var(--color-accent-hover);
+}
+
+.is-enhanced .section-book__review.has-toggle .section-book__review-toggle {
+  display: block;
+}
+
+.section-book__reviews-more {
+  display: flex;
+  margin: var(--space-32) auto 0;
+}
+
+.section-book__reviews-more[hidden] {
+  display: none;
+}
+
+/* ------------------------------------------------------------
+   Окно с полным отзывом
+   ------------------------------------------------------------ */
+.review-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-40) var(--container-padding-mobile);
+}
+
+.review-modal.is-open {
+  display: flex;
+}
+
+.review-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-scrim-strong);
+}
+
+.review-modal__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--size-review-modal-max-width);
+  max-height: 86vh;
+  background-color: var(--color-surface-1);
+  border: var(--border-width) solid var(--color-border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.review-modal__panel:focus {
+  outline: none;
+}
+
+.review-modal__close {
+  position: absolute;
+  top: var(--space-16);
+  right: var(--space-16);
+  width: var(--space-40);
+  height: var(--space-40);
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-surface-2);
+  color: var(--color-text);
+  font-size: var(--font-size-20);
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.review-modal__close:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.review-modal__head {
+  padding: var(--space-28) var(--space-80) var(--space-20) var(--space-40);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.review-modal__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: var(--space-24) var(--space-40);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-160);
+  color: var(--color-text);
+  -webkit-overflow-scrolling: touch;
+}
+
+.review-modal__body p + p {
+  margin-top: var(--space-14);
+}
+
+.review-modal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--space-40) var(--space-24);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.review-modal__counter {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-14-5);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.review-modal__arrow {
+  padding: var(--space-10) var(--space-18);
+}
+
+body.review-modal-open {
+  overflow: hidden;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 980px) {
+  .section-book__wrap {
+    grid-template-columns: minmax(0, 1fr);
+    text-align: left;
+  }
+
+  .section-book__cover {
+    max-width: var(--measure-book-cover-mobile);
+  }
+
+  .section-book__reviews {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .review-modal {
+    padding: var(--space-12);
+  }
+
+  .review-modal__panel {
+    max-height: 92vh;
+  }
+
+  .review-modal__head {
+    padding: var(--space-20) var(--space-64) var(--space-16) var(--space-20);
+  }
+
+  .review-modal__body {
+    padding: var(--space-18) var(--space-20);
+    font-size: var(--font-size-15);
+  }
+
+  .review-modal__nav {
+    padding: var(--space-12) var(--space-20) var(--space-18);
+  }
+
+  .review-modal__arrow-txt {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-book {
+    padding-block: var(--space-64);
+  }
+
+  .section-book__wrap {
+    gap: var(--space-28);
+  }
+
+  .section-book__reviews {
+    margin-top: var(--space-40);
+  }
+}

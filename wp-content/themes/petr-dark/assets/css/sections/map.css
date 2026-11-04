@@ -1,0 +1,81 @@
+/* ============================================================
+   СЕКЦИЯ: map
+   ============================================================
+   Своей секции нет в эталоне concept-a-dark-premium.html, верстаем
+   в той же системе: eyebrow-less заголовок как в .section-title,
+   рамка-панель как у .hero-photo-frame (surface + border-strong).
+
+   Фикс известной ошибки старого сайта: сама картинка карты почти
+   чёрная с белыми подписями, поэтому секция на чистом --color-bg
+   выглядела пустым экраном. Решение: секция на surface-1 (на тон
+   светлее фона) плюс собственная рамка-панель у картинки на surface-2
+   с заметной границей: изображение читается как отдельная карточка,
+   а не как часть фона, независимо от того, что нарисовано внутри.
+   ============================================================ */
+
+.section-map {
+  padding-block: var(--space-100);
+  background-color: var(--color-surface-1);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.section-map__head {
+  max-width: var(--measure-lead);
+  margin-bottom: var(--space-52);
+}
+
+.section-map__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+  color: var(--color-text);
+}
+
+.section-map__subtitle {
+  margin-top: var(--space-14);
+  font-size: var(--font-size-15-5);
+  line-height: var(--line-height-160);
+  color: var(--color-text-muted);
+}
+
+.section-map__frame {
+  background-color: var(--color-surface-2);
+  border: var(--border-width) solid var(--color-border-strong);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-24);
+}
+
+.section-map__image {
+  width: 100%;
+  height: auto;
+}
+
+/* Две версии карты: тёмная (белые подписи) и светлая (тёмные подписи),
+   см. sections/map.php. Без JavaScript data-theme нет, сайт тёмный,
+   видна тёмная версия. */
+.section-map__image--light,
+html[data-theme="light"] .section-map__image--dark {
+  display: none;
+}
+
+html[data-theme="light"] .section-map__image--light {
+  display: block;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .section-map {
+    padding-block: var(--space-64);
+  }
+
+  .section-map__head {
+    margin-bottom: var(--space-32);
+  }
+
+  .section-map__frame {
+    padding: var(--space-12);
+  }
+}

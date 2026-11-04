@@ -1,0 +1,533 @@
+/* ============================================================
+   СЕКЦИЯ: dataru_case — большой живой кейс ДатаРу
+   ============================================================
+   28.09.2026. Подача перенесена с systemmatica.com/director/:
+   одна колонка как журнальный разворот, структуру держат тонкие
+   линии и один акцентный цвет. Три слоя доказательств: цифры,
+   настоящий отчёт, который можно полистать, истории от первого лица.
+   Лента листов работает и без скрипта (прокрутка), стрелки, главы
+   и окно просмотра добавляет assets/js/dataru-case.js.
+   ============================================================ */
+.section-dataru {
+  padding-block: var(--space-100);
+  background-color: var(--color-surface-1);
+  border-block: var(--border-width) solid var(--color-border);
+  overflow: hidden;
+}
+
+/* Текст стоит по левому краю контейнера, как лента листов под ним;
+   длину строк историй и цитаты ограничивают их собственные max-width. */
+.section-dataru__quote blockquote {
+  max-width: var(--measure-dataru);
+}
+
+.section-dataru__kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-14);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-16);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-dataru__kicker::before {
+  content: "";
+  width: var(--size-dataru-kicker-line);
+  height: var(--border-width);
+  background-color: var(--color-accent);
+}
+
+.section-dataru__kicker--second {
+  margin-top: var(--space-64);
+}
+
+.section-dataru__heading {
+  margin-top: var(--space-18);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-section-title);
+  line-height: var(--line-height-110);
+}
+
+.section-dataru__lead {
+  margin-top: var(--space-24);
+  max-width: var(--measure-prose);
+  font-size: var(--font-size-17);
+  line-height: var(--line-height-160);
+  color: var(--color-text-muted);
+}
+
+.section-dataru__lead strong {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Полоса цифр между двумя линиями */
+.section-dataru__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: var(--space-44) 0 0;
+  border-block: var(--border-width) solid var(--color-border-strong);
+}
+
+.section-dataru__stat {
+  padding: var(--space-28) var(--space-24) var(--space-28) 0;
+}
+
+.section-dataru__stat + .section-dataru__stat {
+  padding-left: var(--space-24);
+  border-left: var(--border-width) solid var(--color-border);
+}
+
+.section-dataru__stat-value {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-40);
+  line-height: var(--line-height-110);
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.section-dataru__stat-label {
+  margin: var(--space-10) 0 0;
+  font-size: var(--font-size-14-5);
+  line-height: var(--line-height-145);
+  color: var(--color-text-muted);
+}
+
+/* Тезисы с жирным началом и бронзовым тире */
+.section-dataru__points {
+  margin-top: var(--space-32);
+}
+
+.section-dataru__points li {
+  position: relative;
+  padding: var(--space-18) 0 var(--space-18) var(--space-32);
+  border-bottom: var(--border-width) solid var(--color-border);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-160);
+  color: var(--color-text-muted);
+}
+
+.section-dataru__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(var(--space-18) + 0.8em);
+  width: var(--space-16);
+  height: var(--border-width);
+  background-color: var(--color-accent);
+}
+
+.section-dataru__points strong {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ------------------------------------------------------------
+   Лента листов отчёта
+   ------------------------------------------------------------ */
+.dataru-report {
+  margin-top: var(--space-40);
+}
+
+.dataru-report__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  flex-wrap: wrap;
+}
+
+.dataru-report__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-26);
+}
+
+.dataru-report__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.dataru-report__controls[hidden],
+.dataru-report__chapters[hidden] {
+  display: none;
+}
+
+.dataru-report__counter {
+  margin-right: var(--space-6);
+  font-size: var(--font-size-13);
+  color: var(--color-text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.dataru-report__arrow {
+  width: var(--size-dialog-close);
+  height: var(--size-dialog-close);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-circle);
+  background: none;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+}
+
+.dataru-report__arrow:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.dataru-report__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.dataru-report__chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+  margin-top: var(--space-18);
+}
+
+.dataru-report__chapter {
+  padding: var(--space-6) var(--space-14);
+  border: var(--border-width) solid var(--color-border-strong);
+  background: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-13);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.dataru-report__chapter:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.dataru-report__chapter[aria-pressed="true"] {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Лента выходит из колонки на всю ширину экрана, первый лист
+   встаёт по левому краю контейнера. */
+.dataru-report__track {
+  display: flex;
+  gap: var(--space-20);
+  margin-top: var(--space-24);
+  padding: var(--space-10) max(var(--container-padding), calc((100vw - var(--container-width)) / 2 + var(--container-padding))) var(--space-20);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: max(var(--container-padding), calc((100vw - var(--container-width)) / 2 + var(--container-padding)));
+  scrollbar-width: none;
+}
+
+.dataru-report__track::-webkit-scrollbar {
+  display: none;
+}
+
+.dataru-sheet {
+  flex: 0 0 var(--size-dataru-sheet-width);
+  scroll-snap-align: start;
+}
+
+.dataru-sheet__link {
+  display: block;
+  cursor: zoom-in;
+}
+
+.dataru-sheet__paper {
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border-strong);
+  background-color: var(--color-surface-2);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard);
+}
+
+.dataru-sheet__paper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.dataru-sheet__link:hover .dataru-sheet__paper {
+  transform: translateY(calc(var(--motion-sheet-lift) * -1));
+}
+
+.dataru-sheet__caption {
+  display: flex;
+  gap: var(--space-10);
+  margin-top: var(--space-12);
+  font-size: var(--font-size-13);
+  line-height: var(--line-height-145);
+  color: var(--color-text-muted);
+}
+
+.dataru-sheet__num {
+  flex-shrink: 0;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.dataru-report__note {
+  font-size: var(--font-size-12);
+  color: var(--color-text-dim);
+}
+
+/* ------------------------------------------------------------
+   Окно просмотра листа
+   ------------------------------------------------------------ */
+.dataru-lightbox {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  /* Плюс к затемнению ::backdrop: лист читается, страница за ним не мешает. */
+  background-color: var(--color-scrim-strong);
+  color: var(--color-text);
+}
+
+.dataru-lightbox::backdrop {
+  background-color: var(--color-scrim-strong);
+}
+
+.dataru-lightbox[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataru-lightbox__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  padding: var(--space-14) var(--space-20);
+  background-color: var(--color-surface-1);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.dataru-lightbox__caption {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-14-5);
+}
+
+.dataru-lightbox__close {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--size-dialog-close);
+  height: var(--size-dialog-close);
+  border: var(--border-width) solid var(--color-border-strong);
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.dataru-lightbox__close:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.dataru-lightbox__close span::before,
+.dataru-lightbox__close span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-16);
+  height: var(--border-width);
+  background-color: currentColor;
+}
+
+.dataru-lightbox__close span::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dataru-lightbox__close span::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.dataru-lightbox__stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.dataru-lightbox__scroll {
+  width: 100%;
+  max-width: var(--size-dataru-lightbox-max-width);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-20) var(--space-16);
+}
+
+.dataru-lightbox__scroll img {
+  width: 100%;
+  height: auto;
+  box-shadow: var(--shadow-card);
+}
+
+.dataru-lightbox__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: var(--space-52);
+  height: var(--space-52);
+  transform: translateY(-50%);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-surface-1);
+  color: var(--color-text);
+  font-size: var(--font-size-19);
+  cursor: pointer;
+}
+
+.dataru-lightbox__arrow:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.dataru-lightbox__arrow--prev {
+  left: var(--space-20);
+}
+
+.dataru-lightbox__arrow--next {
+  right: var(--space-20);
+}
+
+/* ------------------------------------------------------------
+   Истории и цитата
+   ------------------------------------------------------------ */
+.section-dataru__stories {
+  display: grid;
+  gap: var(--space-40);
+  margin-top: var(--space-28);
+}
+
+.dataru-story {
+  padding-left: var(--space-28);
+  border-left: var(--space-2) solid var(--color-accent);
+}
+
+.dataru-story__title {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-22);
+  line-height: var(--line-height-125);
+}
+
+.dataru-story p {
+  margin-top: var(--space-14);
+  max-width: var(--measure-article);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-160);
+  color: var(--color-text-muted);
+}
+
+.dataru-story strong {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.section-dataru__quote {
+  margin-top: var(--space-64);
+  padding-top: var(--space-40);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.section-dataru__quote blockquote {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--font-size-28);
+  line-height: var(--line-height-135);
+  color: var(--color-text);
+}
+
+.section-dataru__quote figcaption {
+  margin-top: var(--space-16);
+  font-size: var(--font-size-12);
+  letter-spacing: var(--tracking-14);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.section-dataru__cta {
+  margin-top: var(--space-40);
+}
+
+@media (max-width: 980px) {
+  .section-dataru__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .section-dataru__stat:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .section-dataru__stat:nth-child(n + 3) {
+    border-top: var(--border-width) solid var(--color-border);
+  }
+}
+
+@media (max-width: 600px) {
+  .section-dataru {
+    padding-block: var(--space-64);
+  }
+
+  .section-dataru__stat,
+  .section-dataru__stat + .section-dataru__stat {
+    padding: var(--space-18) var(--space-12);
+  }
+
+  .section-dataru__stat:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .section-dataru__stat-value {
+    font-size: var(--font-size-28);
+  }
+
+  .dataru-report__track {
+    padding-inline: var(--container-padding-mobile);
+    scroll-padding-inline: var(--container-padding-mobile);
+  }
+
+  .dataru-sheet {
+    flex-basis: var(--size-dataru-sheet-width-mobile);
+  }
+
+  .dataru-lightbox__arrow {
+    display: none;
+  }
+
+  .section-dataru__quote blockquote {
+    font-size: var(--font-size-22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dataru-sheet__paper {
+    transition: none;
+  }
+
+  .dataru-sheet__link:hover .dataru-sheet__paper {
+    transform: none;
+  }
+}
